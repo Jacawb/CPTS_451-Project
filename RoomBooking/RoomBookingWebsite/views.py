@@ -10,12 +10,6 @@ def home(request):
 
 def room_browsing(request):
     buildings = Building.objects.all()
-    selected_building = request.GET.get('building')
-    
-    rooms = Room.objects.filter(buildingid=selected_building) if selected_building else Room.objects.none()
+    available_rooms = Room.objects.filter(is_available=True)
 
-    return render(request, 'room_browsing.html', {
-        'buildings': buildings,
-        'rooms': rooms,
-        'selected_building': selected_building
-    })
+    return render(request, 'room_browsing.html', {'buildings': buildings, 'rooms': available_rooms})
