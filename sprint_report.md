@@ -41,3 +41,5 @@ Here's what we'd like to improve:
 Here are changes we plan to implement in the next sprint:
 * Do more team meetings so we can get our work together
 * MySQL server
+* Make HTML files use the same style/visually cohesive
+
