@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'application/style.css' %}">
+    {% if title %}
+    <title>Housing Application - {{ title }}</title>
+    {% else %}
+    <title>Housing Application</title>
+    {% endif %}
+</head>
+
+<body>
+    <div class="horizontal-rule-header"></div>
+    <h1>Dorm Booking Application</h1>
+    <div class="main-form">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Select your Dorm building: </p>
+            <label for="building">Choose here: </label>
+            <input id="building" type="text" name="building" list="dorms" value="{{ building }}">
+            </br>
+            <p>Show available rooms in {{ building }}</p> <button type="submit">OK</button>
+
+            {% comment %}
+            will use later
+            </br>
+            <label for="phone">Choice 2: </label>
+            <input id="phone" type="text" name="phone" list="dorms">
+            {% endcomment %}
+
+            </br>
+
+            <datalist id="dorms">
+                <option value="Stephenson">
+                <option value="Rogers">
+                <option value="Olympia">
+                <option value="Northside">
+                <option value="Duncan Dunn">
+            </datalist>
+
+            {% if building == 'Stephenson' %}
+            <div class="rooms-list">
+                <div class="box">
+                    <h2>ROOM 101</h2>
+                    <p>Occupancy: 2</p>
+                    <p>Furnishings: None</p>
+                </div>
+                <div class="box">
+                    <h2>ROOM 102</h2>
+                    <p>Occupancy: 2</p>
+                    <p>Furnishings: Refrigerator</p>
+                </div>
+            </div>
+
+            {% endif %}
+
+            <br>
+            <br>
+            <button onclick="location.href='/application/page1/'">
+                PREVIOUS
+            </button>
+
+            <button onclick="location.href='/application/confirm/'">
+                SUBMIT
+            </button>
+        </form>
+
+    </div>
+
+    {% comment %}
+    select room and floor
+    select single or double (occupancy)
+    room furnishings
+    check availability
+    {% endcomment %}
+
+</body>
+
+</html>

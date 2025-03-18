@@ -1,0 +1,49 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'application/style.css' %}">
+    {% if title %}
+    <title>Housing Application - {{ title }}</title>
+    {% else %}
+    <title>Housing Application</title>
+    {% endif %}
+</head>
+
+<body>
+    <div class="horizontal-rule-header"></div>
+    <h1>Dorm Booking Application</h1>
+    <div class="main-form">
+        <form action="" method="post">
+            <p>Update your personal information: </p>
+            <label for="name">Name: </label>
+            <input id="name" type="text" name="name" value="{{ current_name }}">
+
+            <label for="phone">Phone: </label>
+            <input id="phone" type="text" name="phone" value="{{ current_phone }}">
+
+            <label for="address">Address: </label>
+            <input id="address" type="text" name="address" value="{{ current_address }}">
+            <input type="submit" value="OK">
+        </form>
+        <p>Select your move-in date:</p>
+        <input type="radio" id="option1">
+        <label for="option1">August 10</label><br>
+        <input type="radio" id="option2">
+        <label for="option2">August 11</label><br>
+        <input type="radio" id="option3">
+        <label for="option3">August 12</label><br>
+        <br>
+        <button onclick="location.href='/application/page2/'">
+            NEXT
+        </button>
+    </div>
+
+
+</body>
+
+</html>
