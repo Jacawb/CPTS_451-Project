@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("RoomBookingWebsite.urls")),
     path("login/", include(("RoomBookingWebsite.urls", "base"), "base")),
-    # path('application/', include('application.urls')),
+    path('application/', include('applicationPortal.urls')),
 
 ]
