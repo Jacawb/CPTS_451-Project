@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+import pymysql
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,10 +77,16 @@ WSGI_APPLICATION = 'RoomBooking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cpts451_room_booking',
+        'USER': 'root',
+        'PASSWORD': 'felix456',
+        'HOST': 'localhost',  # Use 'localhost' if the database is on the same machine.
+        'PORT': '3301',       # Default MySQL port.
     }
 }
 

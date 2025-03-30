@@ -1,7 +1,7 @@
 from django.db import models
 
 class Student(models.Model):
-    student_id = models.CharField(max_length=15, unique=True)
+    student_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])
@@ -29,12 +29,12 @@ class Room(models.Model):
     residents = models.TextField(blank=True)  # Store student names or IDs as a comma-separated string
 
 class MaintenanceWorker(models.Model):
-    maintenance_id = models.CharField(max_length=15, unique=True)
+    maintenance_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
 
 class Administrator(models.Model):
-    admin_id = models.CharField(max_length=15, unique=True)
+    admin_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
