@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def home(request):
- return render(request, "home.html", {})
+ return render(request, "loginPortal/home.html", {})
 
 
 def authView(request):
@@ -15,4 +15,4 @@ def authView(request):
    return redirect("base:login")
  else:
   form = UserCreationForm()
- return render(request, "registration/signup.html", {"form": form})
+ return render(request, "loginPortal/registration/signup.html", {"form": form})
