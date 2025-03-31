@@ -9,12 +9,16 @@ def home(request):
 
 
 def room_browsing(request):
+    populate_test_data()
     buildings = Building.objects.all()
     available_rooms = Room.objects.filter(is_available=True)
 
-    return render(request, 'room_browsing.html', {'buildings': buildings, 'rooms': available_rooms})
+    return render(request, 'RoomBookingWebsite/RoomBrowsing.html', {'buildings': buildings, 'rooms': available_rooms})
 
-def populate_test_data(request):
+def populate_test_data():
+    if Room.objects.filter(room_number="101A").exists():
+        return
+     
     # Create Furnishings
     bed = Furnishing.objects.create(type="Bed", is_available=True)
     desk = Furnishing.objects.create(type="Desk", is_available=True)

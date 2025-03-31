@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+
 
 {% block title %}Browse Rooms{% endblock %}
 
@@ -20,22 +20,27 @@
     <!-- Room Cards -->
     <div class="row" id="roomList">
         {% for room in rooms %}
-        <div class="col-md-4 mb-4 room-card" data-building-id="{{ room.building_id }}">
+        <div class="col-md-4 mb-4 room-card" data-building-id="{{ room.building.id }}">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Room {{ room.room_number }} (Floor {{ room.floor_number }})</h5>
                     <p class="card-text">
                         <strong>Size:</strong> {{ room.size_sqft }} sqft<br>
                         <strong>Total Occupancy:</strong> {{ room.total_occupancy }}<br>
-                        <strong>Availability:</strong> {% if room.is_available %}<span class="text-success">Available</span>{% else %}<span class="text-danger">Occupied</span>{% endif %}<br>
-                        <strong>Furnishings:</strong> 
-                        {% if room.furnishings.all %}
-                            {{ room.furnishings.all|join:", " }}
+                        <strong>Availability:</strong> 
+                        {% if room.is_available %}
+                            <span class="text-success">Available</span>
                         {% else %}
-                            None
+                            <span class="text-danger">Occupied</span>
                         {% endif %}
+                        <br>
+                        <strong>Furnishings:</strong> 
+                        {% for furnishing in room.furnishings.all %}
+                            {{ furnishing.name }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            None
+                        {% endfor %}
                     </p>
-                    <a href="{% url 'room_detail' room_id=room.room_id %}" class="btn btn-primary">View Details</a>
                 </div>
             </div>
         </div>
