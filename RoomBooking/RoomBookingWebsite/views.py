@@ -6,8 +6,6 @@ from .models import *
 def home(request):
     return HttpResponse("Welcome")
 
-
-
 def room_browsing(request):
     populate_test_data()
     buildings = Building.objects.all()
