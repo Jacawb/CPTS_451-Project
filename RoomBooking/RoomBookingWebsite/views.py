@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from .models import *
+
+# Create your views here.
 
 def home(request):
     return HttpResponse("Welcome")
+
+
 
 def room_browsing(request):
     populate_test_data()
