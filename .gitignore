@@ -1,0 +1,41 @@
+# Django files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Database files
+*.sql
+*.db
+*.sqlite3
+
+# MySQL-specific files
+*.mysql
+*.myd
+*.myi
+
+# Environment files
+.env
+.vscode/
+
+# Media and static files
+/media/
+/static/
+
+# Log files
+*.log
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+
+# MacOS-specific files
+.DS_Store
+
+# Windows-specific files
+Thumbs.db
+
+# Files installed by pip
+pip-log.txt
+pip-delete-this-directory.txt
