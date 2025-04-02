@@ -8,9 +8,20 @@
     <div class="mb-3">
         <label for="buildingSelect" class="form-label">Select Building:</label>
         <select id="buildingSelect" class="form-select" onchange="filterRooms()">
-            <option value="">All Buildings</option>
+            <option value="0"
+                {% if selected_building_id|stringformat:"i" == "0" %}
+                    selected
+                {% endif %}
+            >All Buildings</option>
+            
             {% for building in buildings %}
-                <option value="{{ building.id }}" {% if building.id == request.GET.building_id|stringformat:"i" %}selected{% endif %}>{{ building.name }}</option>
+                <option value="{{ building.id }}"
+                    {% if building.id|stringformat:"i" == selected_building_id|stringformat:"i" %}
+                        selected
+                    {% endif %}
+                >
+                    {{ building.name }}
+                </option>
             {% endfor %}
         </select>
     </div>
@@ -49,17 +60,16 @@
 <script>
     function filterRooms() {
         const selectedBuilding = document.getElementById('buildingSelect').value;
-        const url = new URL(window.location.href);
+        const urlParams = new URLSearchParams(window.location.search);
 
-        // Add or update the building_id query parameter
-        if (selectedBuilding) {
-            url.searchParams.set('building_id', selectedBuilding);
+        if (selectedBuilding && selectedBuilding !== "0") {
+            urlParams.set('building_id', selectedBuilding);
         } else {
-            url.searchParams.delete('building_id');
+            urlParams.delete('building_id');  // Remove if "All Buildings" is selected
         }
 
-        // Redirect to the updated URL
-        window.location.href = url.toString();
+        // Update URL and reload the page
+        window.location.href = window.location.pathname + "?" + urlParams.toString();
     }
 </script>
 {% endblock %}

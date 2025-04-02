@@ -20,7 +20,8 @@ class Command(BaseCommand):
             return
 
         # Create Furnishings
-        bed = Furnishing.objects.create(type="Bed", is_available=True)
+        bed1 = Furnishing.objects.create(type="Bed", is_available=True)
+        bed2 = Furnishing.objects.create(type="Bed", is_available=True)
         desk = Furnishing.objects.create(type="Desk", is_available=True)
         closet = Furnishing.objects.create(type="Closet", is_available=True)
 
@@ -51,7 +52,7 @@ class Command(BaseCommand):
 
 
         # Add Furnishings to Rooms
-        room1.furnishings.add(bed, desk)
-        room2.furnishings.add(bed, closet)
+        room1.furnishings.add(bed1, desk)
+        room2.furnishings.add(bed2, closet)
 
         self.stdout.write(self.style.SUCCESS("Test data populated successfully!"))
