@@ -10,7 +10,7 @@
         <select id="buildingSelect" class="form-select" onchange="filterRooms()">
             <option value="">All Buildings</option>
             {% for building in buildings %}
-                <option value="{{ building.id }}">{{ building.name }}</option>
+                <option value="{{ building.id }}" {% if building.id == request.GET.building_id|stringformat:"i" %}selected{% endif %}>{{ building.name }}</option>
             {% endfor %}
         </select>
     </div>
@@ -49,15 +49,17 @@
 <script>
     function filterRooms() {
         const selectedBuilding = document.getElementById('buildingSelect').value;
-        const rooms = document.querySelectorAll('.room-card');
+        const url = new URL(window.location.href);
 
-        rooms.forEach(room => {
-            if (selectedBuilding === '' || room.getAttribute('data-building-id') === selectedBuilding) {
-                room.style.display = 'block';
-            } else {
-                room.style.display = 'none';
-            }
-        });
+        // Add or update the building_id query parameter
+        if (selectedBuilding) {
+            url.searchParams.set('building_id', selectedBuilding);
+        } else {
+            url.searchParams.delete('building_id');
+        }
+
+        // Redirect to the updated URL
+        window.location.href = url.toString();
     }
 </script>
 {% endblock %}
