@@ -6,6 +6,10 @@
     display: flex;
 }
 
+h1 {
+    font-size: larger;
+}
+
 .main-form {
     margin: auto;
     border: 2px solid #2a2f33;
