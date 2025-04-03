@@ -88,7 +88,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cpts451_room_booking',
         'USER': 'root',
-        'PASSWORD': 'felix456',
+        'PASSWORD': 'trisha451sql',
         'HOST': 'localhost',  # Use 'localhost' if the database is on the same machine.
         'PORT': '3306',       # Default MySQL port.
     }
