@@ -22,9 +22,9 @@ def room_browsing(request):
 
     # Filter rooms based on selected building
     if selected_building_id > 0:
-        available_rooms = Room.objects.filter(building_id=selected_building_id, is_available=True)
+        available_rooms = Room.objects.filter(building_id=selected_building_id, is_available=True).prefetch_related('furnishings')
     else:
-        available_rooms = Room.objects.filter(is_available=True)
+        available_rooms = Room.objects.filter(is_available=True).prefetch_related('furnishings')
 
     return render(request, 'RoomBookingWebsite/RoomBrowsing.html', {
         'buildings': buildings,

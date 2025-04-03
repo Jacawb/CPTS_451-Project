@@ -10,7 +10,7 @@ class Command(BaseCommand):
         for room in Room.objects.all():
             room.furnishings.clear()
 
-        # Now delete records
+        # Delete records
         Room.objects.all().delete()
         Building.objects.all().delete()
         Furnishing.objects.all().delete()
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         room1 = Room.objects.create(
         room_number="101A",
         floor_number=1,
-        building_id=building1.id,  # ✅ Use building_id instead of building
+        building_id=building1.id,  
         size_sqft=200,
         total_occupancy=2,
         is_available=True,
@@ -43,7 +43,7 @@ class Command(BaseCommand):
         room2 = Room.objects.create(
         room_number="102B",
         floor_number=1,
-        building_id=building2.id,  # ✅ Use building_id instead of building
+        building_id=building2.id,  
         size_sqft=250,
         total_occupancy=3,
         is_available=True,

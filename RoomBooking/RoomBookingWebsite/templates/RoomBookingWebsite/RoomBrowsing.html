@@ -45,7 +45,7 @@
                         <br>
                         <strong>Furnishings:</strong> 
                         {% for furnishing in room.furnishings.all %}
-                            {{ furnishing.name }}{% if not forloop.last %}, {% endif %}
+                            {{ furnishing.type }}{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             None
                         {% endfor %}

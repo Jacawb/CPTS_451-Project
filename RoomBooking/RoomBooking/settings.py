@@ -89,7 +89,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'felix456',
         'HOST': 'localhost',  # Use 'localhost' if the database is on the same machine.
-        'PORT': '3306',       # Default MySQL port.
+        'PORT': '3306',       
     }
 }
 
