@@ -22,5 +22,6 @@ urlpatterns = [
     path("rooms/", include("RoomBookingWebsite.urls")),
     path("login/", include(("loginPortal.urls", "base"), "base")), #Delete later if merged
     path('application/', include('applicationPortal.urls')),
+    path('admin/', include('adminPortal.urls')),
 
 ]
