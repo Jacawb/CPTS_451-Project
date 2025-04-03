@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Request</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Maintenance Request</h2>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <!-- Full Name -->
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <!-- Room Number -->
+            <label for="room_number">Room Number</label>
+            <input type="text" id="room_number" name="room_number" required>
+
+            <!-- Issue Type Dropdown -->
+            <label for="issue_type">Issue Type</label>
+            <select id="issue_type" name="issue_type" required>
+                <option value="">Select an issue</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Heating/Cooling">Heating/Cooling</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <!-- Issue Description -->
+            <label for="description">Describe the Issue</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Request</button>
+        </form>
+    </div>
+
+</body>
+</html>

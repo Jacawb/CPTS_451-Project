@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request Submitted</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h2>Request Submitted</h2>
+        <p>Your maintenance request has been received. We will address the issue soon.</p>
+        <a href="{% url 'maintenance_request' %}">Submit another request</a>
+    </div>
+</body>
+</html>
