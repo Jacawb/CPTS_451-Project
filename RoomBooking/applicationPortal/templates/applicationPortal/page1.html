@@ -1,7 +1,7 @@
 {% extends "applicationPortal/base.html" %}
 {% block content %}
 <form action="" method="post">
-    <p>Update your personal information: </p>
+    <p class="heading">Update your personal information: </p>
     <label for="name">Name: </label>
     <input id="name" type="text" name="name" value="{{ current_name }}">
 
@@ -10,9 +10,9 @@
 
     <label for="address">Address: </label>
     <input id="address" type="text" name="address" value="{{ current_address }}">
-    <input type="submit" value="OK">
 </form>
-<p>Select your move-in date:</p>
+<br>
+<p class="heading">Select your move-in date:</p>
 <input type="radio" id="option1">
 <label for="option1">August 10</label><br>
 <input type="radio" id="option2">

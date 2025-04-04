@@ -1,3 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: medium;
+    /* padding: 20px;  Prevents content from touching screen edges */
+}
+
 .horizontal-rule-header {
     border-bottom: 20px solid rgb(133, 28, 28);
     padding: 0px;
@@ -7,21 +18,57 @@
 }
 
 h1 {
-    font-size: larger;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 50px;
+    line-height: 60px;
+}
+
+.heading {
+    font-size: 30px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+p, label {
+    font-size: 20px;
+    line-height: 35px;
 }
 
 .main-form {
     margin: auto;
-    border: 2px solid #2a2f33;
+    /* border: 2px solid #2a2f33; */
     width: 60%;
-    padding: 30px;
+    padding: 70px;
+    box-shadow: 0 0px 24px rgba(0, 0, 0, 0.2);
+    padding: 20px;  /* More padding inside */
+    border-radius: 8px;
 }
 
 .rooms-list {
     display: inline-block;
 }
 
-.box {
-    border: 1px solid #2a2f33;
-    width: 150px;
+.buttons-container {
+    display: inline-block;
+}
+
+button {
+    width: auto;
+    padding: 14px;
+    background-color: rgb(107, 8, 28);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;  /* Space above button */
+}
+
+button:hover {
+    background-color: #e2b220;
+}
+
+input {
+    padding: 7px;
+    font-size: 18px;
 }

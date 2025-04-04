@@ -1,7 +1,7 @@
 {% extends "applicationPortal/base.html" %}
 {% block content %}
     {% csrf_token %}
-    <p>Roommate Preferences: </p>
+    <p class="heading">Roommate Preferences: </p>
     <p>Do you drink?</p>
     <input type="radio" id="yes">
     <label for="yes">YES</label>
@@ -29,13 +29,16 @@
 <label for="option3">12AM</label><br>
     <br>
 <br>
-<button onclick="location.href='/application/page2/'">
-    PREVIOUS
-</button>
+<div class="buttons-container">
+    <button onclick="location.href='/application/page2/'">
+        PREVIOUS
+    </button>
+    
+    <button onclick="location.href='/application/confirm/'">
+        SUBMIT
+    </button>
+</div>
 
-<button onclick="location.href='/application/confirm/'">
-    SUBMIT
-</button>
 
 {% endblock content %}
 

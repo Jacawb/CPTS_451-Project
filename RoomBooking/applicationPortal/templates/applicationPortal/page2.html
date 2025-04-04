@@ -4,9 +4,12 @@
     {% csrf_token %}
     <p>Select your Dorm building: </p>
     <label for="building">Choose here: </label>
-    <input id="building" type="text" name="building" list="dorms" value="{{ building }}">
+    <input id="building" name="building" list="dorms">
+    <button type="submit">OK</button>
     </br>
-    <p>Show available rooms in {{ building }}</p> <button type="submit">OK</button>
+    {% if building %}
+    <p>Showing available rooms in {{ building }}</p>
+    {% endif %}
 
     {% comment %}
     will use later
@@ -45,13 +48,14 @@
 
 <br>
 <br>
+<div class="buttons-container">
 <button onclick="location.href='/application/page1/'">
     PREVIOUS
 </button>
-
 <button onclick="location.href='/application/page3/'">
     NEXT
 </button>
+</div>
 
 {% endblock content %}
 
