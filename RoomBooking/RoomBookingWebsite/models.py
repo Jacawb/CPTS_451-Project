@@ -26,7 +26,23 @@ class Room(models.Model):
     total_occupancy = models.IntegerField()
     furnishings = models.ManyToManyField(Furnishing, blank=True)
     is_available = models.BooleanField(default=True)
-    residents = models.TextField(blank=True)  # Store student names or IDs as a comma-separated string
+
+class Application(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ])
+
+class RoomAssignment(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
 
 class MaintenanceWorker(models.Model):
     maintenance_id = models.AutoField(primary_key=True)
@@ -48,6 +64,13 @@ class MaintenanceRequest(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+class FurnishingRequest(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    furnishing = models.ForeignKey(Furnishing, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    issue_description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
 class Building(models.Model):
     name = models.CharField(max_length=100)
