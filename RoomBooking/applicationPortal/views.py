@@ -13,5 +13,8 @@ def pg2(request):
         building = request.POST.get('building')
     return render(request, 'applicationPortal/page2.html', {'title': 'Page2', 'building': building})
 
+def pg1(request):
+    return render(request, 'applicationPortal/page3.html', {'title': 'Page3'})
+
 def confirmation(request):
     return render(request, 'applicationPortal/confirmation.html', {'title': 'Submitted!'})
