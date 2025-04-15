@@ -1,16 +1,14 @@
 from django.db import models
 
 class Student(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    
     student_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])
     age = models.IntegerField()
     date_of_birth = models.DateField()
-    email = models.EmailField(unique=True)
     phone_numbers = models.JSONField()  # List of phone numbers
     roommates = models.ManyToManyField("self", blank=True)
-    
 class Furnishing(models.Model):
     furniture_id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=50)  # e.g., "Bed", "Desk", "Closet"
@@ -50,10 +48,9 @@ class MaintenanceWorker(models.Model):
     last_name = models.CharField(max_length=50)
 
 class Administrator(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='administrator_profile')
+    
     admin_id = models.AutoField(primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
 
 class MaintenanceRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
