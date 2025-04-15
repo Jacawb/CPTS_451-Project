@@ -1,0 +1,5 @@
+student_id,first_name,last_name,email,phone_number,DOB,Gender
+1,John,Doe,john.doe@example.com,1234567890,2004-01-15,Male
+2,Jane,Smith,jane.smith@example.com,2345678901,2003-03-22,Female
+3,Alice,Johnson,alice.j@example.com,3456789012,2002-07-10,Female
+4,Bob,Williams,bob.w@example.com,4567890123,2001-05-30,Male

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="{% static 'adminPortal/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Room Booking Admin Portal</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'adminPortal:home' %}">Home</a></li>
+                <li><a href="{% url 'adminPortal:manage_rooms' %}">Manage Rooms</a></li>
+                <li><a href="{% url 'adminPortal:manage_bookings' %}">Manage Bookings</a></li>
+                <li><a href="{% url 'adminPortal:logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome, {{ user.username }}</h2>
+        <p>Select an option from the menu to manage rooms or bookings.</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Room Booking System</p>
+    </footer>
+</html>
