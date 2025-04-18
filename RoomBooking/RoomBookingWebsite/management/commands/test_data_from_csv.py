@@ -16,7 +16,7 @@ class Command(BaseCommand):
         MaintenanceRequest.objects.all().delete()
 
         # Load Furnishing Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/furnishing.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/furnishing.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 Furnishing.objects.create(
@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 )
 
         # Load Building Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/building.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/building.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 Building.objects.create(
@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 )
         
         # Load Student Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/student.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/student.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 Student.objects.create(
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                 )
 
         # Load Room Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/room.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/room.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 room = Room.objects.create(
@@ -61,7 +61,7 @@ class Command(BaseCommand):
                 )
         
         # Load Maintenance Worker Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/maintenance_worker.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/maintenance_worker.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 MaintenanceWorker.objects.create(
@@ -73,7 +73,7 @@ class Command(BaseCommand):
                 )
 
         # Load Administrator Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/administrator.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/administrator.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 Administrator.objects.create(
@@ -85,7 +85,7 @@ class Command(BaseCommand):
                 )
 
         # Load Maintenance Request Data
-        with open('RoomBooking/RoomBookingWebsite/management/commands/maintenance_request.csv', mode='r') as file:
+        with open('RoomBooking/RoomBookingWebsite/test_data/maintenance_request.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 MaintenanceRequest.objects.create(
