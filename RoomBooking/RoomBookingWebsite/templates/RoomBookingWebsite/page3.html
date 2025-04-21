@@ -1,4 +1,4 @@
-{% extends "applicationPortal/base.html" %}
+{% extends "RoomBookingWebsite/base.html" %}
 {% block content %}
     {% csrf_token %}
     <p class="heading">Roommate Preferences: </p>
@@ -30,11 +30,11 @@
     <br>
 <br>
 <div class="buttons-container">
-    <button onclick="location.href='/application/page2/'">
+    <button onclick="location.href='/RoomBookingWebsite/page2/'">
         PREVIOUS
     </button>
     
-    <button onclick="location.href='/application/confirm/'">
+    <button onclick="location.href='/RoomBookingWebsite/confirm/'">
         SUBMIT
     </button>
 </div>

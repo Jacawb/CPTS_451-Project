@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "RoomBookingWebsite",
-    'applicationPortal.apps.ApplicationportalConfig',
     'loginPortal.apps.LoginportalConfig',
     'adminPortal.apps.AdminportalConfig',
 

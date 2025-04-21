@@ -31,3 +31,21 @@ def room_browsing(request):
         'rooms': available_rooms,
         'selected_building_id': selected_building_id  # Pass the selected building ID to the template
     })
+
+def start(request):
+    return render(request, 'RoomBookingWebsite/start.html')
+
+def pg1(request):
+    return render(request, 'RoomBookingWebsite/page1.html', {'title': 'Page1'})
+
+def pg2(request):
+    building = None
+    if request.method == 'POST':
+        building = request.POST.get('building')
+    return render(request, 'RoomBookingWebsite/page2.html', {'title': 'Page2', 'building': building})
+
+def pg3(request):
+    return render(request, 'RoomBookingWebsite/page3.html', {'title': 'Page3'})
+
+def confirmation(request):
+    return render(request, 'RoomBookingWebsite/confirmation.html', {'title': 'Submitted!'})

@@ -19,9 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("rooms/", include("RoomBookingWebsite.urls")),
+    path("RoomBookingWebsite/", include("RoomBookingWebsite.urls")),
     path("login/", include(("loginPortal.urls", "base"), "base")), #Delete later if merged
-    path('application/', include('applicationPortal.urls')),
     path('admin/', include('adminPortal.urls')),
 
 ]
