@@ -20,7 +20,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("RoomBookingWebsite/", include("RoomBookingWebsite.urls")),
-    path("login/", include(("loginPortal.urls", "base"), "base")), #Delete later if merged
     path('admin/', include('adminPortal.urls')),
 
 ]

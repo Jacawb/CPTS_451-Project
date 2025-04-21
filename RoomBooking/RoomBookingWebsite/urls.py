@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns=[
@@ -8,4 +8,6 @@ urlpatterns=[
     path('page3/', views.pg3, name="application-pg3"),
     path('confirm/', views.confirmation, name="application-confirmation"),
     path('rooms/', views.room_browsing, name='room_browsing'),
+    path("signup/", views.authView, name="authView"),
+    path("accounts/", include("django.contrib.auth.urls")),
 ]

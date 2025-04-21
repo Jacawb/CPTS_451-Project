@@ -1,4 +1,7 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+
 from .models import *
 
 # Create your views here.
@@ -49,3 +52,19 @@ def pg3(request):
 
 def confirmation(request):
     return render(request, 'RoomBookingWebsite/confirmation.html', {'title': 'Submitted!'})
+
+
+@login_required
+def home(request):
+ return render(request, "RoomBookingWebsite/home.html", {})
+
+
+def authView(request):
+ if request.method == "POST":
+  form = UserCreationForm(request.POST or None)
+  if form.is_valid():
+   form.save()
+   return redirect("base:login")
+ else:
+  form = UserCreationForm()
+ return render(request, "RoomBookingWebsite/signup.html", {"form": form})
