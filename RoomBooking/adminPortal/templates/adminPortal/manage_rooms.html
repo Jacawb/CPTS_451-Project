@@ -1,0 +1,35 @@
+{% extends "adminPortal/base.html" %}
+{% block title %}Manage Rooms{% endblock %}
+
+{% block content %}
+<h2>Manage Rooms</h2>
+<table> 
+    <tr>
+        <th>Room</th>
+        <th>Building</th>
+        <th>Occupants</th>
+        <th>Actions</th>
+    </tr>
+    {% for room in rooms %}
+    <tr>
+        <td>{{ room.room_number }}</td>
+        <td>{{ room.building_id }}</td>
+        <td>
+            {% if room_occupancy|get_item:room.room_id %}
+                {% for student in room_occupancy[room.room_id] %}
+                    <strong>{{ student.user.username }}</strong><br>
+                    (Assigned from {{ student.roomassignment.start_date }} to {{ student.roomassignment.end_date }})<br>
+                {% empty %}
+                    No occupants
+                {% endfor %}
+            {% else %}
+                No occupants
+            {% endif %}
+        </td>
+        <td>
+            <a href="{% url 'adminPortal:reassign_room' room.room_id %}">Reassign</a>
+        </td>        
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
