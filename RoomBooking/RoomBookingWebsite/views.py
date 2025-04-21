@@ -68,3 +68,6 @@ def authView(request):
  else:
   form = UserCreationForm()
  return render(request, "RoomBookingWebsite/signup.html", {"form": form})
+
+def admin_home(request):
+    return render(request, "RoomBookingWebsite/adminHome.html") 

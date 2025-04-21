@@ -10,4 +10,6 @@ urlpatterns=[
     path('rooms/', views.room_browsing, name='room_browsing'),
     path("signup/", views.authView, name="authView"),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("admin/", views.admin_home, name="admin_home"),
+
 ]
