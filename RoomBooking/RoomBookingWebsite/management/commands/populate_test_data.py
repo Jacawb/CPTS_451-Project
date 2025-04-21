@@ -36,8 +36,7 @@ class Command(BaseCommand):
         building_id=building1.id,  
         size_sqft=200,
         total_occupancy=2,
-        is_available=True,
-        residents=""
+        is_available=True
     )
 
         room2 = Room.objects.create(
@@ -46,8 +45,7 @@ class Command(BaseCommand):
         building_id=building2.id,  
         size_sqft=250,
         total_occupancy=3,
-        is_available=True,
-        residents="John Doe, Jane Doe"
+        is_available=True
     )
 
 
