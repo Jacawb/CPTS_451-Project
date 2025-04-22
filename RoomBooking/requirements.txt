@@ -1,0 +1,3 @@
+django
+pyodbc
+django-mssql-backend
