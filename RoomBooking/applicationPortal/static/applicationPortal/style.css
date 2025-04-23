@@ -68,7 +68,7 @@ button:hover {
     background-color: #e2b220;
 }
 
-input {
+#buildingSelect {
     padding: 7px;
     font-size: 18px;
 }

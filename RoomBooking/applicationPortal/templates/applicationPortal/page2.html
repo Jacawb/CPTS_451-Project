@@ -2,33 +2,81 @@
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
-    <p>Select your Dorm building: </p>
-    <label for="building">Choose here: </label>
+    <p>Select the room you want to apply for: </p>
+    {% comment %} <label for="building">Choose here: </label>
     <input id="building" name="building" list="dorms">
     <button type="submit">OK</button>
-    </br>
-    {% if building %}
+    </br> {% endcomment %}
+    {% comment %} {% if building %}
     <p>Showing available rooms in {{ building }}</p>
-    {% endif %}
+    {% endif %} {% endcomment %}
+    <div class="container">
+        {% comment %} <h1 class="my-4 text-center">Browse Available Rooms</h1> {% endcomment %}
+    
+        <!-- Building Selection -->
+        <div class="mb-3">
+            <label for="buildingSelect" class="form-label">Select Building:</label>
+            <select id="buildingSelect" class="form-select" onchange="filterRooms()">
+                <option value="0"
+                    {% if selected_building_id|stringformat:"i" == "0" %}
+                        selected
+                    {% endif %}
+                >All Buildings</option>
+                
+                {% for building in buildings %}
+                    <option value="{{ building.id }}"
+                        {% if building.id|stringformat:"i" == selected_building_id|stringformat:"i" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ building.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <!-- Room Cards -->
+        <div class="row" id="roomList">
+            {% for room in rooms %}
+            <div class="col-md-4 mb-4 room-card" data-building-id="{{ room.building.id }}">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Room {{ room.room_number }} (Floor {{ room.floor_number }})</h5>
+                        <p class="card-text">
+                            <strong>Size:</strong> {{ room.size_sqft }} sqft<br>
+                            <strong>Total Occupancy:</strong> {{ room.total_occupancy }}<br>
+                            <strong>Availability:</strong> 
+                            {% if room.is_available %}
+                                <span class="text-success">Available</span>
+                            {% else %}
+                                <span class="text-danger">Occupied</span>
+                            {% endif %}
+                            <br>
+                            <strong>Furnishings:</strong> 
+                            {% for furnishing in room.furnishings.all %}
+                                {{ furnishing.type }}{% if not forloop.last %}, {% endif %}
+                            {% empty %}
+                                None
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 
-    {% comment %}
-    will use later
     </br>
-    <label for="phone">Choice 2: </label>
-    <input id="phone" type="text" name="phone" list="dorms">
-    {% endcomment %}
-
-    </br>
-
+{% comment %} 
     <datalist id="dorms">
         <option value="Stephenson">
         <option value="Rogers">
         <option value="Olympia">
         <option value="Northside">
         <option value="Duncan Dunn">
-    </datalist>
+    </datalist> {% endcomment %}
 
-    {% if building == 'Stephenson' %}
+    {% comment %} {% if building == 'Stephenson' %}
     <div class="rooms-list">
         <div class="box">
             <h2>ROOM 101</h2>
@@ -42,7 +90,7 @@
         </div>
     </div>
 
-    {% endif %}
+    {% endif %} {% endcomment %}
 
 </form>
 
@@ -57,11 +105,28 @@
 </button>
 </div>
 
-{% endblock content %}
-
  {% comment %}
     select room and floor
     select single or double (occupancy)
     room furnishings
     check availability
     {% endcomment %}
+    
+    <script>
+        function filterRooms() {
+            const selectedBuilding = document.getElementById('buildingSelect').value;
+            const urlParams = new URLSearchParams(window.location.search);
+    
+            if (selectedBuilding && selectedBuilding !== "0") {
+                urlParams.set('building_id', selectedBuilding);
+            } else {
+                urlParams.delete('building_id');  // Remove if "All Buildings" is selected
+            }
+    
+            // Update URL and reload the page
+            window.location.href = window.location.pathname + "?" + urlParams.toString();
+        }
+    </script>
+
+{% endblock content %}
+    
