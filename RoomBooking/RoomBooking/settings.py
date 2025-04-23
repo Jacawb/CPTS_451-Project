@@ -81,6 +81,7 @@ WSGI_APPLICATION = 'RoomBooking.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
@@ -97,9 +98,30 @@ DATABASES = {
             'encrypt': True,
             'trustServerCertificate': False,
             'connection_timeout': 30,
+            'host_is_server': True,
+            'unicode_results': True,
+            'extra_params': 'TDS_Version=8.0;Encrypt=yes;TrustServerCertificate=no;',
         },
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'sql_server.pyodbc',
+#         'NAME': 'cpts451roombooking',
+#         'USER': 'admin1',
+#         'PASSWORD': '*FYGFykWCAyTY7yi',
+#         'HOST': 'roombookserver.database.windows.net',
+#         'PORT': '1433',
+
+#         'OPTIONS': {
+#             'driver': 'ODBC Driver 18 for SQL Server',
+#             'host_is_server': True,
+#             'unicode_results': True,
+#             'extra_params': 'TDS_Version=7.4;Encrypt=yes;TrustServerCertificate=no;',
+#         },
+#     }
+# }
 
 
 # Password validation
@@ -119,6 +141,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
 
 
 # Internationalization
