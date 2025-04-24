@@ -56,29 +56,56 @@ def pg1(request):
 def pg2(request):
     buildings = Building.objects.all()
     selected_building_id = request.GET.get("building_id")
+    occupancy_filter = request.GET.get("occupancy")
+    floor_filter = request.GET.get("floor")
+    order_by = request.GET.get("order_by")
 
-    if selected_building_id is None:
-        selected_building_id = 0  # Default to "All Buildings"
-    elif selected_building_id == "":
-        selected_building_id = 0  # Ignore empty requests, treat as "All Buildings"
-    else:
-        try:
-            selected_building_id = int(selected_building_id)  # Convert to int safely
-        except ValueError:
-            selected_building_id = 0  # Fallback in case of invalid input
+    try:
+        selected_building_id = int(selected_building_id or 0)
+    except ValueError:
+        selected_building_id = 0
 
-    # Filter rooms based on selected building
+    # Start with available rooms
     if selected_building_id > 0:
         available_rooms = Room.objects.filter(building_id=selected_building_id, is_available=True).prefetch_related('furnishings')
     else:
         available_rooms = Room.objects.filter(is_available=True).prefetch_related('furnishings')
 
+    # Apply occupancy filter
+    if occupancy_filter:
+        try:
+            available_rooms = available_rooms.filter(total_occupancy=int(occupancy_filter))
+        except ValueError:
+            pass  # Ignore invalid input
+
+    # Apply floor filter
+    if floor_filter:
+        try:
+            available_rooms = available_rooms.filter(floor_number=int(floor_filter))
+        except ValueError:
+            pass
+
+    # Apply sorting
+    if order_by in ['size_sqft', '-size_sqft', 'total_occupancy', '-total_occupancy']:
+        available_rooms = available_rooms.order_by(order_by)
+
+    # Dynamically get floors available for selected building
+    if selected_building_id > 0:
+        floors = Room.objects.filter(building_id=selected_building_id).values_list('floor_number', flat=True).distinct().order_by('floor_number')
+    else:
+        floors = Room.objects.values_list('floor_number', flat=True).distinct().order_by('floor_number')
+
+    occupancy_options = [2, 3, 4]
+
     return render(request, 'applicationPortal/page2.html', {
         'buildings': buildings,
         'rooms': available_rooms,
+        'floors': floors,
+        'selected_building_id': selected_building_id,
         'title': 'Page2',
-        'selected_building_id': selected_building_id  # Pass the selected building ID to the template
+        'occupancy_options': occupancy_options,
     })
+
     # return render(request, ', {'title': 'Page2', 'building': building})
 
 def pg3(request):

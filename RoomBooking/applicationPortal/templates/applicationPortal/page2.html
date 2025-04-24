@@ -34,6 +34,44 @@
                 {% endfor %}
             </select>
         </div>
+
+        <form method="get" id="filter-form">
+            <div class="row mb-3">
+                <!-- Occupancy Filter -->
+                <div class="col-md-4">
+                    <label for="occupancy" class="form-label">Filter by Occupancy:</label>
+                    <select name="occupancy" id="occupancy" class="form-select" onchange="submitFilters()">
+                        <option value="">All</option>
+                        {% for n in occupancy_options %}
+                            <option value="{{ n }}" {% if selected_occupancy == n|stringformat:"s" %}selected{% endif %}>{{ n }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <!-- Floor Filter -->
+                <div class="col-md-4">
+                    <label for="floor" class="form-label">Filter by Floor:</label>
+                    <select name="floor" id="floor" class="form-select" onchange="submitFilters()">
+                        <option value="">All</option>
+                        {% for floor in floors %}
+                            <option value="{{ f }}" {% if selected_floor == f|stringformat:"s" %}selected{% endif %}>{{ f }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+        
+                <!-- Ordering -->
+                <div class="col-md-4">
+                    <label for="order_by" class="form-label">Order By:</label>
+                    <select name="order_by" id="order_by" class="form-select" onchange="submitFilters()">
+                        <option value="">None</option>
+                        <option value="size_sqft" {% if request.GET.order_by == "size_sqft" %}selected{% endif %}>Size ↑</option>
+                        <option value="-size_sqft" {% if request.GET.order_by == "-size_sqft" %}selected{% endif %}>Size ↓</option>
+                        <option value="total_occupancy" {% if request.GET.order_by == "total_occupancy" %}selected{% endif %}>Occupancy ↑</option>
+                        <option value="-total_occupancy" {% if request.GET.order_by == "-total_occupancy" %}selected{% endif %}>Occupancy ↓</option>
+                    </select>
+                </div>
+            </div>
+        </form>
     
         <!-- Room Cards -->
         <div class="row" id="roomList">
@@ -125,6 +163,12 @@
     
             // Update URL and reload the page
             window.location.href = window.location.pathname + "?" + urlParams.toString();
+        }
+    </script>
+
+    <script>
+        function submitFilters() {
+            document.getElementById("filter-form").submit();
         }
     </script>
 

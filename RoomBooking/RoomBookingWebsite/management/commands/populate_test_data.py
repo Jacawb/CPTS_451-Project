@@ -52,8 +52,8 @@ class Command(BaseCommand):
         closet = Furnishing.objects.create(type="Closet", is_available=True)
 
         # Create Buildings
-        building1 = Building.objects.create(name="Dormitory A")
-        building2 = Building.objects.create(name="Dormitory B")
+        building1 = Building.objects.create(name="Dormitory A", floors=12)
+        building2 = Building.objects.create(name="Dormitory B", floors=13)
 
         # Create Rooms
         room1 = Room.objects.create(

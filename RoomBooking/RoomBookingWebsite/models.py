@@ -79,4 +79,5 @@ class FurnishingRequest(models.Model):
 
 class Building(models.Model):
     name = models.CharField(max_length=100)
+    floors = models.IntegerField(default=-1)
 

@@ -29,7 +29,8 @@ class Command(BaseCommand):
             reader = csv.DictReader(file)
             for row in reader:
                 Building.objects.create(
-                    name=row['building_name']
+                    name=row['building_name'],
+                    floors=row['floors']
                 )
         
         # Load Student Data
