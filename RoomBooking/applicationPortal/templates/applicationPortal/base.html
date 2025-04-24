@@ -24,15 +24,20 @@
                 {% if user.is_authenticated %}
                     <span class="me-2">Welcome, {{ user.first_name }}</span>
                     <a href="{% url 'view_info' %}" class="btn btn-outline-info btn-sm me-2">View My Info</a>
-                    <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+                    
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                    </form>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-sm me-2">Login</a>
-                    <a href="{% url 'register' %}" class="btn btn-primary btn-sm">Register</a>
+                    <span class="text-muted me-2">Login</span>
+                    <span class="text-muted">Register</span>
                 {% endif %}
             </div>
         </div>
         <hr>
     </div>
+    
 
     <div class="main-form container mt-4">
         {% block content %}{% endblock %}

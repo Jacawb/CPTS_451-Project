@@ -8,6 +8,8 @@ def start(request):
     return render(request, 'applicationPortal/start.html')
 
 def pg1(request):
+    ##################################################################################################
+    # Testing
     # Prereq: manage.py populate_test_data
     try:
         student = Student.objects.select_related('user').get(user__email='john.doe@example.com')
@@ -18,8 +20,12 @@ def pg1(request):
     
     user=student.user
 
+    # Authenticate user
     if not request.user.is_authenticated:
         login(request, user)
+    ##################################################################################################
+
+    
 
     if request.method == 'POST':
         phone_input = request.POST.get('phone_numbers', '')
