@@ -6,6 +6,26 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
+        # Simulated logged-in or test user
+        test_user, _ = User.objects.get_or_create(
+            email='john.doe@example.com',
+            defaults={
+                'username': 'john.doe@example.com',
+                'first_name': 'John',
+                'last_name': 'Doe',
+            }
+        )
+
+        student, created = Student.objects.get_or_create(
+        user=test_user,
+        defaults={
+            'age': 20,
+            'gender': 'Male',
+            'date_of_birth': '2004-01-15', 
+            'phone_numbers': ['1234567890'],
+        }
+        )
+
         # Clear many-to-many relationships first
         for room in Room.objects.all():
             room.furnishings.clear()

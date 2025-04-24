@@ -1,33 +1,24 @@
 from django.shortcuts import render, redirect
 from applicationPortal.forms import *
 from RoomBookingWebsite.models import *
+from django.contrib.auth import login
 
 def start(request):
     return render(request, 'applicationPortal/start.html')
 
 def pg1(request):
-    # Simulated logged-in or test user
-    test_user, _ = User.objects.get_or_create(
-        email='john.doe@example.com',
-        defaults={
-            'username': 'john.doe@example.com',
-            'first_name': 'John',
-            'last_name': 'Doe',
-        }
-    )
-
-    student, created = Student.objects.get_or_create(
-    user=test_user,
-    defaults={
-        'age': 20,
-        'gender': 'Male',
-        'date_of_birth': '2004-01-15', 
-        'phone_numbers': ['1234567890'],
-    }
-    )
+    # Prereq: manage.py populate_test_data
+    try:
+        student = Student.objects.select_related('user').get(user__email='john.doe@example.com')
+    except Student.DoesNotExist:
+        return render(request, 'applicationPortal/page1.html', {
+            'error': 'Test student not found. Please run "manage.py populate_test_data".'
+        })
     
-    # user = User.objects.get(username='alice')
-    # profile = user.student_profile
+    user=student.user
+
+    if not request.user.is_authenticated:
+        login(request, user)
 
     if request.method == 'POST':
         phone_input = request.POST.get('phone_numbers', '')
@@ -88,3 +79,6 @@ def pg3(request):
 
 def confirmation(request):
     return render(request, 'applicationPortal/confirmation.html', {'title': 'Submitted!'})
+
+def userinfo(request):
+    return render (request, 'applicationPortal/viewuserinfo.html')
