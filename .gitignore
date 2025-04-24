@@ -41,3 +41,5 @@ Thumbs.db
 # Files installed by pip
 pip-log.txt
 pip-delete-this-directory.txt
+RoomBooking/applicationPortal/__pycache__/views.cpython-313.pyc
+RoomBooking/RoomBookingWebsite/__pycache__/models.cpython-313.pyc
