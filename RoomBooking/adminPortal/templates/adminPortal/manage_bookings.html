@@ -1,0 +1,38 @@
+{% extends "adminPortal/base.html" %}
+{% block title %}Manage Applications{% endblock %}
+
+{% block content %}
+<h2>Manage Applications</h2>
+<table>
+    <tr>
+        <th>Student</th>
+        <th>Room</th>
+        <th>Status</th>
+        <th>Dates</th>
+        <th>Actions</th>
+    </tr>
+    {% for application in applications %}
+    <tr>
+        <td>{{ application.student.user.username }}</td>
+        <td>{{ application.room.room_number }}</td>
+        <td>{{ application.status }}</td>
+        <td>{{ application.start_date }} - {{ application.end_date|default:"N/A" }}</td>
+        <td>
+            {% if application.status == "Pending" %}
+                <form action="{% url 'approve_application' application.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Approve</button>
+                </form>
+                <form action="{% url 'reject_application' application.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit">Reject</button>
+                </form>
+            {% if application.status != "Pending" %}
+                <p>Status: {{ application.status }}</p>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    </tr>
+</table>
+{% endblock %}

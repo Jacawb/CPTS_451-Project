@@ -1,0 +1,24 @@
+{% extends 'adminPortal/base.html' %}
+
+{% block title %}Reassign Rooms{% endblock %}
+
+{% block content %}
+<h2>Reassign Room for {% if student %}{{ student.user.username }}{% else %}No student assigned{% endif %}</h2>
+
+{% if student %}
+<form method="post">
+    {% csrf_token %}
+
+    <label for="new_room">Select a new room:</label>
+    <select name="new_room_id" id="new_room_id">
+        {% for room in rooms %}
+        <option value="{{ room.id }}">{{ room.room_number }} ({{ room.building_id }})</option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Reassign</button>
+</form>
+{% else %}
+    <p>No student is currently assigned to this room.</p>
+{% endif %}    
+{% endblock %}
