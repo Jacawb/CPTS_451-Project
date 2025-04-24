@@ -1,12 +1,6 @@
 {% extends "loginPortal/base.html" %}
 {% block content %}
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+<!-- Container for the form to center it on the page -->
 <div class="form-container">
   <h2>Login</h2>
   <form method="POST">
@@ -14,9 +8,9 @@
       {{ form.as_p }}
       <button type="submit">Login</button>
   </form>
-<a class="signup-link" href="{% url "authView" %}">Signup</a>
+  <a href="{% url 'signup' %}">Don't have an account? Register</a>
 </div>
-</div>
+{% comment %} <a href="{% url 'maintenance_request' %}">Maintenance Request</a> {% endcomment %}
 {% endblock content %}
 
 
