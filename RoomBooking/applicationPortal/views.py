@@ -25,16 +25,18 @@ def pg1(request):
         'phone_numbers': ['1234567890'],
     }
     )
+    
+    # user = User.objects.get(username='alice')
+    # profile = user.student_profile
 
     if request.method == 'POST':
-        # Get phone numbers textarea input and split it into a list
         phone_input = request.POST.get('phone_numbers', '')
         phone_numbers = [num.strip() for num in phone_input.strip().splitlines() if num.strip()]
 
         move_in_date = request.POST.get('move_in_date')
 
         student.phone_numbers = phone_numbers
-        student.move_in_date = move_in_date
+        # student.move_in_date = move_in_date
         student.save()
 
         # Redirect or render success message
