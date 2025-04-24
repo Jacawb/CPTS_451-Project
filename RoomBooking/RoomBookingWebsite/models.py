@@ -1,8 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Preferences(models.Model):
+    smoking = models.BooleanField(default=False)
+    drinking = models.BooleanField(default=False)
+    tidy = models.BooleanField(default=False)
+    sleeping = models.BooleanField(default=False)
+    
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
+    preferences = models.OneToOneField(Preferences, on_delete=models.CASCADE, null=True, blank=True, related_name='student_preferences')
     
     student_id = models.AutoField(primary_key=True)
     gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])

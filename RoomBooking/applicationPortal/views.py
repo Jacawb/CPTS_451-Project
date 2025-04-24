@@ -109,6 +109,25 @@ def pg2(request):
     # return render(request, ', {'title': 'Page2', 'building': building})
 
 def pg3(request):
+    if request.method == 'POST':
+        student = request.user.student_profile
+
+        # check if the student has preferences
+        if not student.preferences:
+            prefs = Preferences.objects.create()
+            student.preferences = prefs
+            student.save()
+        else:
+            prefs = student.preferences
+ 
+        prefs.drinking = request.POST.get('drink') == 'yes'
+        prefs.smoking = request.POST.get('smoke') == 'yes'
+        prefs.tidy = request.POST.get('cleanliness') == 'tidy'
+        prefs.sleeping = request.POST.get('bedtime') == 'early'
+        prefs.save()
+
+        return redirect('/application/confirm/')
+
     return render(request, 'applicationPortal/page3.html', {'title': 'Page3'})
 
 def confirmation(request):
