@@ -1,14 +1,17 @@
 {% extends "loginPortal/base.html" %}
 {% block content %}
-<div class="shadow-wrap">
- <div class="form-wrap">
-  <h3>Login </h3>
-<form method="POST">
- {% csrf_token %}
- {{form}}
- <button type="submit">Submit</button>
-</form>
-<a class="signup-link" href="{% url "base:authView" %}">Signup</a>
+<!-- Container for the form to center it on the page -->
+<div class="form-container">
+  <h2>Login</h2>
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+  </form>
+  <a href="{% url 'signup' %}">Don't have an account? Register</a>
 </div>
-</div>
-{% endblock content %}a
+{% comment %} <a href="{% url 'maintenance_request' %}">Maintenance Request</a> {% endcomment %}
+{% endblock content %}
+
+
+ 
