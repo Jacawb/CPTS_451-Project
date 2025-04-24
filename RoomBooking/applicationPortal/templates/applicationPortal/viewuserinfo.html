@@ -33,6 +33,9 @@
             </div>
         </div>
         {% endfor %}
+        <form action="{% url 'maintenance_request' %}" method="get">
+            <button type="submit">Submit Maintenance Request</button>
+          </form>
     {% else %}
         <p>No current room assignment.</p>
     {% endif %}

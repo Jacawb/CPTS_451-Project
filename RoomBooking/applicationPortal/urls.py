@@ -10,4 +10,6 @@ urlpatterns=[
     path('confirm/', views.confirmation, name="application-confirmation"),
     path('logout/', LogoutView.as_view(next_page='application-start'), name='logout'),
     path('userinfo/', views.userinfo, name='view_info'),
+    path('maintenance/', views.maintenance_request_view, name='maintenance_request'),
+    path('maintenance/success/', views.maintenance_success_view, name='maintenance_success'),
 ]

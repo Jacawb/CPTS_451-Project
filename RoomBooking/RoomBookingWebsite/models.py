@@ -54,14 +54,21 @@ class Administrator(models.Model):
     admin_id = models.AutoField(primary_key=True)
 
 class MaintenanceRequest(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    issue = models.TextField()
-    maintenance_worker = models.ForeignKey(
-        MaintenanceWorker, on_delete=models.SET_NULL, null=True, blank=True
+    name = models.CharField(max_length=100, default='Anonymous')
+    room_number = models.CharField(max_length=10, default='Unknown')
+    issue_type = models.CharField(
+        max_length=50,
+        choices=[
+            ('Plumbing', 'Plumbing'),
+            ('Electrical', 'Electrical'),
+            ('Heating/Cooling', 'Heating/Cooling'),
+            ('Furniture', 'Furniture'),
+            ('Other', 'Other'),
+        ],
+        default='Other'
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    description = models.TextField(default='none')
+    submitted_at = models.DateTimeField(auto_now_add=True)
     
 class FurnishingRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

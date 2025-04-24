@@ -92,3 +92,24 @@ def userinfo(request):
         'applications':applications,
         'assignment':roomAssignment,
     })
+
+def maintenance_request_view(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        room_number = request.POST.get('room_number')
+        issue_type = request.POST.get('issue_type')
+        description = request.POST.get('description')
+
+        MaintenanceRequest.objects.create(
+            name=name,
+            room_number=room_number,
+            issue_type=issue_type,
+            description=description
+        )
+
+        return redirect('maintenance_success')  # Redirect to a success page
+
+    return render(request, 'applicationPortal/maintenance_req.html')
+
+def maintenance_success_view(request):
+    return render(request, 'applicationPortal/maintenance_success.html')
