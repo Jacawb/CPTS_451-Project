@@ -1,14 +1,23 @@
 {% extends "loginPortal/base.html" %}
 {% block content %}
-<div class="shadow-wrap">
- <div class="form-wrap">
-  <h3>Login </h3>
-<form method="POST">
- {% csrf_token %}
- {{form}}
- <button type="submit">Submit</button>
-</form>
-<a class="signup-link" href="{% url "base:authView" %}">Signup</a>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<div class="form-container">
+  <h2>Login</h2>
+  <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Login</button>
+  </form>
+<a class="signup-link" href="{% url "authView" %}">Signup</a>
 </div>
 </div>
-{% endblock content %}a
+{% endblock content %}
+
+
+ 
