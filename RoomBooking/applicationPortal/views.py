@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from applicationPortal.forms import *
 from RoomBookingWebsite.models import *
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 def start(request):
     return render(request, 'applicationPortal/start.html')
@@ -80,5 +81,14 @@ def pg3(request):
 def confirmation(request):
     return render(request, 'applicationPortal/confirmation.html', {'title': 'Submitted!'})
 
+@login_required
 def userinfo(request):
-    return render (request, 'applicationPortal/viewuserinfo.html')
+    student = request.user.student_profile
+    
+    applications = Application.objects.filter(student=student)
+    roomAssignment = RoomAssignment.objects.filter(student=student)
+    return render (request, 'applicationPortal/viewuserinfo.html', {
+        'student':student,
+        'applications':applications,
+        'assignment':roomAssignment,
+    })

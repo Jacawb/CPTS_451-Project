@@ -1,5 +1,69 @@
-{% extends "applicationPortal/base.html" %}
+{% extends 'applicationPortal/base.html' %}
 {% block content %}
-<p class="heading">User info</p>
-<p>Hello</p>
-{% endblock content %}
+<div class="container mt-4">
+    <!-- 1. User Attributes -->
+    <h2>User Profile</h2>
+    <table class="table table-bordered">
+        <tr><th>First Name</th><td>{{ request.user.first_name }}</td></tr>
+        <tr><th>Last Name</th><td>{{ request.user.last_name }}</td></tr>
+        <tr><th>Email</th><td>{{ request.user.email }}</td></tr>
+        <tr><th>Username</th><td>{{ request.user.username }}</td></tr>
+        <tr><th>Gender</th><td>{{ student.gender }}</td></tr>
+        <tr><th>Age</th><td>{{ student.age }}</td></tr>
+        <tr><th>Date of Birth</th><td>{{ student.date_of_birth }}</td></tr>
+        <tr><th>Phone Numbers</th><td>
+            <ul>
+                {% for phone in student.phone_numbers %}
+                    <li>{{ phone }}</li>
+                {% endfor %}
+            </ul>
+        </td></tr>
+    </table>
+
+    <!-- 2. Room Assignment -->
+    <h2 class="mt-5">Current Room Assignment</h2>
+    {% if assignment %}
+        {% for assign in assignment %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Room Number:</strong> {{ assign.room.room_number }}</p>
+                <p><strong>Building:</strong> {{ assign.room.building_id }}</p>
+                <p><strong>Start Date:</strong> {{ assign.start_date }}</p>
+                <p><strong>End Date:</strong> {{ assign.end_date|default:"Ongoing" }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No current room assignment.</p>
+    {% endif %}
+
+    <!-- 3. Applications -->
+    <h2 class="mt-5">Room Applications</h2>
+    {% if applications %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Room Number</th>
+                    <th>Building</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                <tr>
+                    <td>{{ app.room.room_number }}</td>
+                    <td>{{ app.room.building_id }}</td>
+                    <td>{{ app.status }}</td>
+                    <td>{{ app.start_date }}</td>
+                    <td>{{ app.end_date|default:"Ongoing" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No applications submitted yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
