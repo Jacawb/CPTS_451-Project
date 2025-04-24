@@ -1,10 +1,10 @@
 from django.urls import path
 from . import views
 
-app_name = 'adminPortal'
 
 urlpatterns = [
     # Example view
+    path('', views.start, name="admin-start"),
     path('manage_rooms/', views.manage_rooms, name='manage_rooms'),
     path('manage_bookings/', views.manage_bookings, name='manage_bookings'),
     path('approve_application/<int:application_id>/', views.approve_application, name='approve_application'),

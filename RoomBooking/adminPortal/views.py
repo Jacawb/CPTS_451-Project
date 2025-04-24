@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from RoomBookingWebsite.models import Room, Student, RoomAssignment, Application
 
 
+def start(request):
+        return render(request, 'adminPortal/start.html')
+
 # This view is for managing rooms and their occupancy
 def manage_rooms(request):
     rooms = Room.objects.all()
