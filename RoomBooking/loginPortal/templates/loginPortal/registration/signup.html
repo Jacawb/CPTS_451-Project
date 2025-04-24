@@ -1,4 +1,4 @@
-{% extends "loginPortal/base.html" %}
+{% extends "applicationPortal/base.html" %}
 {% block content %}
 <div class="form-container">
   <h2>Register</h2>
@@ -7,7 +7,7 @@
       {{ form.as_p }} 
       <button type="submit">Register</button>
   </form>
-<a class="signup-link" href="{% url "base:login" %}">Already have an account? Login</a>
+  <a onclick="location.href='/login'">Already have an account?? Login</button>
 </div>
 {% endblock content %}
 
