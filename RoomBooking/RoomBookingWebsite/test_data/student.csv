@@ -1,5 +1,9 @@
-student_id,first_name,last_name,email,phone_number,DOB,Gender
-1,John,Doe,john.doe@example.com,1234567890,2004-01-15,Male
-2,Jane,Smith,jane.smith@example.com,2345678901,2003-03-22,Female
-3,Alice,Johnson,alice.j@example.com,3456789012,2002-07-10,Female
-4,Bob,Williams,bob.w@example.com,4567890123,2001-05-30,Male
+student_id,first_name,last_name,email,gender,age,DOB,phone_numbers,smoking,drinking,tidy,sleeping
+1,John,Doe,john.doe@example.com,Male,20,2004-04-15,"['123-456-7890', '987-654-3210']",TRUE,FALSE,TRUE,FALSE
+2,Jane,Smith,jane.smith@example.com,Female,22,2002-08-10,"['555-555-5555']",FALSE,FALSE,FALSE,TRUE
+3,Alex,Wong,awong@wsu.edu,Male,21,2003-03-22,"['509-123-4567']",FALSE,TRUE,TRUE,FALSE
+4,Maria,Garcia,mgarcia@wsu.edu,Female,19,2005-07-14,"['509-234-5678', '509-345-6789']",FALSE,FALSE,TRUE,TRUE
+5,David,Kim,dkim@wsu.edu,Male,20,2004-11-30,"['509-456-7890']",TRUE,TRUE,FALSE,FALSE
+6,Taylor,Brown,tbrown@wsu.edu,Other,23,2001-05-18,"['509-567-8901']",FALSE,FALSE,FALSE,FALSE
+7,Sophia,Martinez,smartinez@wsu.edu,Female,20,2004-09-25,"['509-678-9012']",FALSE,TRUE,TRUE,TRUE
+8,Ethan,Wilson,ewilson@wsu.edu,Male,22,2002-12-05,"['509-789-0123']",TRUE,FALSE,FALSE,TRUE

@@ -1,4 +1,9 @@
-request_id,room_number,issue,request_date
-1,101A,Leaking faucet in bathroom.,2025-03-15
-2,102B,Broken window.,2025-03-16
-3,101A,Heating system not working.,2025-03-17
+name,room_number,issue_type,description,request_date
+John Doe,101,Plumbing,Leaking faucet,2025-04-10
+Jane Smith,102,Electrical,Broken light,2025-04-11
+John Doe,101,Heating,No heat in room,2025-04-12
+Jane Smith,102,Internet,No internet connection,2025-04-13
+Alex Wong,201,Furniture,Broken desk drawer,2025-04-14
+Maria Garcia,302,Plumbing,Toilet not flushing,2025-04-15
+David Kim,104,Electrical,Outlet not working,2025-04-16
+Taylor Brown,203,Other,Window won't close,2025-04-17

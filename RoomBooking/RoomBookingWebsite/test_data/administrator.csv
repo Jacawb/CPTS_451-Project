@@ -1,3 +1,6 @@
-admin_id,first_name_a,last_name_a,email_a,phone_number_a
-1,Emily,Clark,emily.clark@example.com,7890123456
-2,Frank,Harris,frank.harris@example.com,8901234567
+admin_id,first_name_a,last_name_a,email_a
+1,Admin,One,admin1@example.com
+2,Admin,Two,admin2@example.com
+3,Sarah,Johnson,sjohnson@housing.wsu.edu
+4,Michael,Chen,mchen@housing.wsu.edu
+5,Emily,Rodriguez,erodriguez@housing.wsu.edu

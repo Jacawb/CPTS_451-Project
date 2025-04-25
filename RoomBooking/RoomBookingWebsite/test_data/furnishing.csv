@@ -3,4 +3,7 @@ Bed,TRUE
 Desk,TRUE
 Chair,TRUE
 Table,TRUE
-
+Dresser,TRUE
+Bookshelf,FALSE
+Lamp,TRUE
+Mini-Fridge,FALSE
