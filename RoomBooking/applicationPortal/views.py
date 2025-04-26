@@ -69,9 +69,9 @@ def pg2(request):
 
     # Start with available rooms
     if selected_building_id > 0:
-        available_rooms = Room.objects.filter(building_id=selected_building_id, is_available=True).prefetch_related('furnishings')
+        available_rooms = Room.objects.filter(building_id=selected_building_id, is_available=True)
     else:
-        available_rooms = Room.objects.filter(is_available=True).prefetch_related('furnishings')
+        available_rooms = Room.objects.filter(is_available=True)
 
     # Apply occupancy filter
     if occupancy_filter:
