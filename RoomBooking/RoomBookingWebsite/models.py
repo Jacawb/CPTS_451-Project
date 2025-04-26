@@ -6,6 +6,16 @@ class Preferences(models.Model):
     drinking = models.BooleanField(default=False)
     tidy = models.BooleanField(default=False)
     sleeping = models.BooleanField(default=False)
+    def match_score(self, other):
+        score = 0
+        if not other:
+            return score
+        score += self.smoking == other.smoking
+        score += self.drinking == other.drinking
+        score += self.tidy == other.tidy
+        score += self.sleeping == other.sleeping
+        return score
+
     
 class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='student_profile')
@@ -16,7 +26,18 @@ class Student(models.Model):
     age = models.IntegerField()
     date_of_birth = models.DateField()
     phone_numbers = models.JSONField()  # List of phone numbers
-    roommates = models.ManyToManyField("self", blank=True)
+    matched = models.BooleanField(default=False)
+
+class StudentRoommates(models.Model):
+    student1 = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='roommate_set_1')
+    student2 = models.ForeignKey('Student', on_delete=models.CASCADE, related_name='roommate_set_2')
+    assigned_on = models.DateTimeField(auto_now_add=True)
+    roommates = models.ManyToManyField("self", symmetrical=True, blank=True)
+
+
+    def __str__(self):
+        return f"{self.student1.user.username} & {self.student2.user.username}"
+
 
 class Furnishing(models.Model):
     furniture_id = models.AutoField(primary_key=True)
