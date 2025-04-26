@@ -74,17 +74,26 @@
         
     
         <!-- Room Cards -->
+        <input type="hidden" name="selected_room_id" id="selectedRoomInput">
         <div class="row" id="roomList">
             {% for room in rooms %}
-            <div class="col-md-4 mb-4 room-card" data-building-id="{{ room.building.id }}">
-                <div class="card">
+            <div class="col-md-4 mb-4">
+                <label class="room-card card selectable-card">
+                    <input 
+                        type="radio" 
+                        name="selected_room" 
+                        value="{{ room.room_id }}" 
+                        class="d-none"  
+                        onclick="highlightCard(this);"
+                        required
+                    >
                     <div class="card-body">
                         <h5 class="card-title">Room {{ room.room_number }} (Floor {{ room.floor_number }})</h5>
                         <p class="card-text">
                             <strong>Size:</strong> {{ room.size_sqft }} sqft<br>
                             <strong>Total Occupancy:</strong> {{ room.total_occupancy }}<br>
                             <strong>Availability:</strong> 
-                            {% if room.is_available %}
+                            {% if room.is_available %}  
                                 <span class="text-success">Available</span>
                             {% else %}
                                 <span class="text-danger">Occupied</span>
@@ -98,49 +107,31 @@
                             {% endfor %}
                         </p>
                     </div>
-                </div>
+                </label>
             </div>
             {% endfor %}
         </div>
     </div>
 
     </br>
-{% comment %} 
-    <datalist id="dorms">
-        <option value="Stephenson">
-        <option value="Rogers">
-        <option value="Olympia">
-        <option value="Northside">
-        <option value="Duncan Dunn">
-    </datalist> {% endcomment %}
-
-    {% comment %} {% if building == 'Stephenson' %}
-    <div class="rooms-list">
-        <div class="box">
-            <h2>ROOM 101</h2>
-            <p>Occupancy: 2</p>
-            <p>Furnishings: None</p>
-        </div>
-        <div class="box">
-            <h2>ROOM 102</h2>
-            <p>Occupancy: 2</p>
-            <p>Furnishings: Refrigerator</p>
-        </div>
-    </div>
-
-    {% endif %} {% endcomment %}
 
 </form>
 
-<br>
-<br>
-<div class="buttons-container">
-<button onclick="location.href='/application/page1/'">
-    PREVIOUS
-</button>
-<button onclick="location.href='/application/page3/'">
-    NEXT
-</button>
+<!-- Separate Form for Room Selection -->
+<form id="roomSelectionForm" method="post" action="/application/page3/">
+    {% csrf_token %}
+    <input type="hidden" name="selected_room_id" id="selectedRoomInput">
+    
+    <div class="buttons-container">
+        <button type="button" onclick="location.href='/application/page1/'">
+            PREVIOUS
+        </button>
+        <button type="button" onclick="submitRoomSelection()">
+            NEXT
+        </button>
+    </div>
+</form>
+
 </div>
 
  {% comment %}
@@ -164,9 +155,7 @@
             // Update URL and reload the page
             window.location.href = window.location.pathname + "?" + urlParams.toString();
         }
-    </script>
 
-    <script>
         function submitFilters() {
             const urlParams = new URLSearchParams(window.location.search);
 
@@ -206,6 +195,19 @@
             // Reload the page with updated query params
             window.location.href = window.location.pathname + "?" + urlParams.toString();
         }
+
+        function submitRoomSelection() {
+            const selectedRoom = document.querySelector('input[name="selected_room"]:checked');
+            if (!selectedRoom) {
+                alert("Please select a room first!");
+                return;
+            }
+            document.getElementById('selectedRoomInput').value = selectedRoom.value;
+            document.getElementById('roomSelectionForm').submit(); // <-- this submits the hidden POST form
+}
+
+
+        
     </script>
 
 {% endblock content %}

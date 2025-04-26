@@ -3,6 +3,8 @@ from applicationPortal.forms import *
 from RoomBookingWebsite.models import *
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from datetime import datetime
+from django.http import HttpResponse
 
 def start(request):
     return render(request, 'applicationPortal/start.html')
@@ -38,7 +40,7 @@ def pg1(request):
         student.save()
 
         # Redirect or render success message
-        return redirect('pg1')  # Reloads the page or change to a success URL
+        return redirect('application-pg1')  # Reloads the page or change to a success URL
 
     # If GET, display form with current data
     context = {
@@ -117,6 +119,14 @@ def pg3(request):
     if request.method == 'POST':
         student = request.user.student_profile
 
+        selected_room_id = request.POST.get("selected_room_id")
+
+        # Ensure the selected_room_id persists even after other POST requests
+        if selected_room_id:
+            request.session['selected_room_id'] = selected_room_id
+        else:
+            selected_room_id = request.session.get('selected_room_id')
+
         # check if the student has preferences
         if not student.preferences:
             prefs = Preferences.objects.create()
@@ -130,6 +140,14 @@ def pg3(request):
         prefs.tidy = request.POST.get('cleanliness') == 'tidy'
         prefs.sleeping = request.POST.get('bedtime') == 'early'
         prefs.save()
+
+        Application.objects.create(
+            student=student,
+            room=Room.objects.get(room_id=selected_room_id),    
+            start_date=datetime.now(),
+            end_date= None,
+            status='Pending'
+        )
 
         return redirect('/application/confirm/')
 

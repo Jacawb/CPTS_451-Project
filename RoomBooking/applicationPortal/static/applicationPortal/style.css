@@ -72,3 +72,19 @@ button:hover {
     padding: 7px;
     font-size: 18px;
 }
+
+.selectable-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease-in-out;
+}
+.selectable-card:hover {
+    border-color: #aaa;
+}
+.selectable-card input[type="radio"]:checked + .card-body,
+.selectable-card input[type="radio"]:checked ~ .card-body {
+    border-color: #007bff;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 0.25rem;
+}
