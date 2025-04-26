@@ -1,3 +1,8 @@
 maintenance_id,first_name_m,last_name_m,email_m,phone_number_m
-1,Charlie,Brown,charlie.brown@example.com,5678901234
-2,Daisy,Miller,daisy.miller@example.com,6789012345
+1,Charlie,Brown,charlie.brown@example.com,567-890-1234
+2,Daisy,Miller,daisy.miller@example.com,678-901-2345
+3,Michael,Johnson,michael.johnson@example.com,555-1234
+4,Susan,Lee,susan.lee@example.com,555-5678
+5,Robert,Wilson,rwilson@facilities.wsu.edu,509-555-1122
+6,Lisa,Thompson,lthompson@facilities.wsu.edu,509-555-3344
+7,James,White,jwhite@facilities.wsu.edu,509-555-5566
