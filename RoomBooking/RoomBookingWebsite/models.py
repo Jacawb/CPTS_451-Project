@@ -17,32 +17,42 @@ class Student(models.Model):
     date_of_birth = models.DateField()
     phone_numbers = models.JSONField()  # List of phone numbers
     roommates = models.ManyToManyField("self", blank=True)
+
 class Furnishing(models.Model):
     furniture_id = models.AutoField(primary_key=True)
     type = models.CharField(max_length=50)  # e.g., "Bed", "Desk", "Closet"
     is_available = models.BooleanField(default=True)
-    
+
+class Building(models.Model):
+    name = models.CharField(max_length=100, unique=True, default='error')
+    floors = models.IntegerField(default=-1)
+    bathroom_type = models.CharField(
+        max_length=50,
+        default="-",
+        choices=[
+            ('Private', 'Private'), 
+            ('Semi-Private', 'Semi-Private'),
+            ('Community', 'Community')
+        ] )
+    gender=models.CharField(
+        max_length=50,
+        default="-",
+        choices=[
+            ('men', 'men'),
+            ('women', 'women'),
+            ('coed', 'coed')
+        ])
 class Room(models.Model):
 
     room_id = models.AutoField(primary_key=True)
     room_number = models.CharField(max_length=10, unique=True)
     floor_number = models.IntegerField()
-    building_id = models.CharField(max_length=10)
+    building_name=models.CharField(max_length=100, unique=True, default='error')
+    building_id = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="rooms")
     size_sqft = models.IntegerField()
     total_occupancy = models.IntegerField()
     furnishings = models.ManyToManyField(Furnishing, blank=True)
     is_available = models.BooleanField(default=True)
-
-class Application(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField(null=True, blank=True)
-    status = models.CharField(max_length=20, choices=[
-        ('Pending', 'Pending'),
-        ('Approved', 'Approved'),
-        ('Rejected', 'Rejected'),
-    ])
 
 class RoomAssignment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -84,24 +94,14 @@ class FurnishingRequest(models.Model):
     issue_description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Building(models.Model):
-    name = models.CharField(max_length=100)
-    floors = models.IntegerField(default=-1)
-    bathroom_type = models.CharField(
-        max_length=50,
-        default="-",
-        choices=[
-            ('Private', 'Private'), 
-            ('Semi-Private', 'Semi-Private'),
-            ('Community', 'Community')
-        ] )
-    gender=models.CharField(
-        max_length=50,
-        default="-",
-        choices=[
-            ('men', 'men'),
-            ('women', 'women'),
-            ('coed', 'coed')
-        ])
 
-
+class Application(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    start_date = models.DateField()
+    end_date = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=[
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ])

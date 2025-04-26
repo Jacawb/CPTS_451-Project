@@ -1,4 +1,4 @@
-room_number,floor_number,building_id,size_sqft,total_occupancy,is_available
+room_number,floor_number,building_name,size_sqft,total_occupancy,is_available
 101,1,Stephenson East,250,2,TRUE
 102,1,McEachern,300,2,FALSE
 201,2,Orton,350,3,TRUE

@@ -97,6 +97,8 @@ def pg2(request):
 
     occupancy_options = [2, 3, 4]
 
+    available_rooms.prefetch_related('furnishings')
+
     return render(request, 'applicationPortal/page2.html', {
         'buildings': buildings,
         'rooms': available_rooms,

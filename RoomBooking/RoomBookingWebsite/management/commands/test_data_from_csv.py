@@ -81,14 +81,15 @@ class Command(BaseCommand):
         with open('RoomBookingWebsite/test_data/room.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                building_id = str(row['building_id'])[:10]
+                building_name = str(row['building_id'])
                 Room.objects.create(
                     room_number=row['room_number'],
                     floor_number=int(row['floor_number']),
-                    building_id=building_id,
+                    building_name=building_name,
                     size_sqft=int(row['size_sqft']),
                     total_occupancy=int(row['total_occupancy']),
                     is_available=row['is_available'] == 'TRUE',
+                    building_id=Building.objects.get(name=building_name).id
                 )
         
         # Load Maintenance Worker Data
