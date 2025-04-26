@@ -30,7 +30,9 @@ class Command(BaseCommand):
             for row in reader:
                 Building.objects.create(
                     name=row['building_name'],
-                    floors=row['floors']
+                    floors=row['floors'],
+                    bathroom_type=row['bathroom_type'],
+                    gender=row['gender']
                 )
         
         # Load Student Data

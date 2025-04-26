@@ -87,4 +87,21 @@ class FurnishingRequest(models.Model):
 class Building(models.Model):
     name = models.CharField(max_length=100)
     floors = models.IntegerField(default=-1)
+    bathroom_type = models.CharField(
+        max_length=50,
+        default="-",
+        choices=[
+            ('Private', 'Private'), 
+            ('Semi-Private', 'Semi-Private'),
+            ('Community', 'Community')
+        ] )
+    gender=models.CharField(
+        max_length=50,
+        default="-",
+        choices=[
+            ('men', 'men'),
+            ('women', 'women'),
+            ('coed', 'coed')
+        ])
+
 
