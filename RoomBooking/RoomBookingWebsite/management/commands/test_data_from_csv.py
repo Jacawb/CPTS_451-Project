@@ -4,19 +4,14 @@ from ast import literal_eval
 from django.core.management.base import BaseCommand
 from RoomBookingWebsite.models import *
 from django.contrib.auth.models import User
+from django.core.management import call_command
 
 class Command(BaseCommand):
     help = 'Load test data from CSV files into the database'
 
     def handle(self, *args, **kwargs):
         # Clear existing data
-        Room.objects.all().delete()
-        Building.objects.all().delete()
-        Furnishing.objects.all().delete()
-        Student.objects.all().delete()
-        MaintenanceWorker.objects.all().delete()
-        Administrator.objects.all().delete()
-        MaintenanceRequest.objects.all().delete()
+        call_command('flush', interactive=False)
 
         # Load Furnishing Data
         with open('RoomBookingWebsite/test_data/furnishing.csv', mode='r') as file:
@@ -81,7 +76,7 @@ class Command(BaseCommand):
         with open('RoomBookingWebsite/test_data/room.csv', mode='r') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                building_name = str(row['building_id'])
+                building_name = str(row['building_name'])
                 Room.objects.create(
                     room_number=row['room_number'],
                     floor_number=int(row['floor_number']),
@@ -89,7 +84,7 @@ class Command(BaseCommand):
                     size_sqft=int(row['size_sqft']),
                     total_occupancy=int(row['total_occupancy']),
                     is_available=row['is_available'] == 'TRUE',
-                    building_id=Building.objects.get(name=building_name).id
+                    building_id=Building.objects.get(name=building_name)
                 )
         
         # Load Maintenance Worker Data
