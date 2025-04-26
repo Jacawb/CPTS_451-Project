@@ -90,10 +90,13 @@ def pg2(request):
         available_rooms = available_rooms.order_by(order_by)
 
     # Dynamically get floors available for selected building
-    if selected_building_id > 0:
-        floors = Room.objects.filter(building_id=selected_building_id).values_list('floor_number', flat=True).distinct().order_by('floor_number')
-    else:
-        floors = Room.objects.values_list('floor_number', flat=True).distinct().order_by('floor_number')
+    floors = []
+    if selected_building_id:
+        try:
+            building = Building.objects.get(id=selected_building_id)
+            floors = list(range(1, building.floors + 1))  # floors = [1, 2, ..., N]
+        except Building.DoesNotExist:
+            pass
 
     occupancy_options = [2, 3, 4]
 

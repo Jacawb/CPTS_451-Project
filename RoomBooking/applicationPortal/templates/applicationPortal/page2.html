@@ -1,6 +1,6 @@
 {% extends "applicationPortal/base.html" %}
 {% block content %}
-<form action="" method="post">
+<form id="room-filter-form" method="get" action="">
     {% csrf_token %}
     <p>Select the room you want to apply for: </p>
     {% comment %} <label for="building">Choose here: </label>
@@ -53,7 +53,7 @@
                     <label for="floor" class="form-label">Filter by Floor:</label>
                     <select name="floor" id="floor" class="form-select" onchange="submitFilters()">
                         <option value="">All</option>
-                        {% for floor in floors %}
+                        {% for f in floors %}
                             <option value="{{ f }}" {% if selected_floor == f|stringformat:"s" %}selected{% endif %}>{{ f }}</option>
                         {% endfor %}
                     </select>
@@ -168,7 +168,43 @@
 
     <script>
         function submitFilters() {
-            document.getElementById("filter-form").submit();
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const buildingId = document.getElementById('buildingSelect').value;
+            const occupancy = document.getElementById('occupancy').value;
+            const floor = document.getElementById('floor').value;
+            const orderBy = document.getElementById('order_by').value;
+
+            // Building filter
+            if (buildingId && buildingId !== "0") {
+                urlParams.set('building_id', buildingId);
+            } else {
+                urlParams.delete('building_id');
+            }
+
+            // Occupancy filter
+            if (occupancy) {
+                urlParams.set('occupancy', occupancy);
+            } else {
+                urlParams.delete('occupancy');
+            }
+
+            // Floor filter
+            if (floor) {
+                urlParams.set('floor', floor);
+            } else {
+                urlParams.delete('floor');
+            }
+
+            // Order By filter
+            if (orderBy) {
+                urlParams.set('order_by', orderBy);
+            } else {
+                urlParams.delete('order_by');
+            }
+
+            // Reload the page with updated query params
+            window.location.href = window.location.pathname + "?" + urlParams.toString();
         }
     </script>
 

@@ -63,6 +63,7 @@ class Building(models.Model):
             ('women', 'women'),
             ('coed', 'coed')
         ])
+    
 class Room(models.Model):
 
     room_id = models.AutoField(primary_key=True)
