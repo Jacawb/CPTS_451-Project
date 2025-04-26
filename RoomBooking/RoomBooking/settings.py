@@ -106,24 +106,6 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'sql_server.pyodbc',
-#         'NAME': 'cpts451roombooking',
-#         'USER': 'admin1',
-#         'PASSWORD': '*FYGFykWCAyTY7yi',
-#         'HOST': 'roombookserver.database.windows.net',
-#         'PORT': '1433',
-
-#         'OPTIONS': {
-#             'driver': 'ODBC Driver 18 for SQL Server',
-#             'host_is_server': True,
-#             'unicode_results': True,
-#             'extra_params': 'TDS_Version=7.4;Encrypt=yes;TrustServerCertificate=no;',
-#         },
-#     }
-# }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
@@ -181,3 +163,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/loginPortal'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+SESSION_COOKIE_AGE = 3600
