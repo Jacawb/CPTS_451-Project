@@ -5,6 +5,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def start(request):
     return render(request, 'applicationPortal/start.html')
@@ -188,3 +190,19 @@ def maintenance_request_view(request):
 
 def maintenance_success_view(request):
     return render(request, 'applicationPortal/maintenance_success.html')
+
+def approve_application(request, application_id):
+    try:
+        # Get the application by its ID
+        application = Application.objects.get(id=application_id)
+
+        # Update the application status
+        application.status = "Approved"
+        application.save()
+
+        # Redirect back to the application change form in the admin panel
+        return HttpResponseRedirect(reverse('admin:RoomBookingWebsite_application_change', args=[application.id]))
+
+    except Application.DoesNotExist:
+        # Handle case where the application is not found
+        return HttpResponseRedirect(reverse('admin:index'))  # Redirect to the admin index or another page
