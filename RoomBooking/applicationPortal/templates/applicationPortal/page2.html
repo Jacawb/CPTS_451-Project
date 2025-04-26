@@ -74,7 +74,7 @@
         
     
         <!-- Room Cards -->
-        <input type="hidden" name="selected_room_id" id="selectedRoomInput">
+        {% comment %} <input type="hidden" name="selected_room_id" id="selectedRoomInput"> {% endcomment %}
         <div class="row" id="roomList">
             {% for room in rooms %}
             <div class="col-md-4 mb-4">
@@ -118,7 +118,7 @@
 </form>
 
 <!-- Separate Form for Room Selection -->
-<form id="roomSelectionForm" method="post" action="/application/page3/">
+<form id="roomSelectionForm" method="post" action="/application/page2/">
     {% csrf_token %}
     <input type="hidden" name="selected_room_id" id="selectedRoomInput">
     
@@ -133,13 +133,6 @@
 </form>
 
 </div>
-
- {% comment %}
-    select room and floor
-    select single or double (occupancy)
-    room furnishings
-    check availability
-    {% endcomment %}
     
     <script>
         function filterRooms() {
@@ -202,13 +195,26 @@
                 alert("Please select a room first!");
                 return;
             }
-            document.getElementById('selectedRoomInput').value = selectedRoom.value;
+            const selectedRoomID = selectedRoom.value;
+            console.log(selectedRoomID)
+
+            document.getElementById('selectedRoomInput').value = selectedRoomID;
             document.getElementById('roomSelectionForm').submit(); // <-- this submits the hidden POST form
 }
 
+function highlightCard(element) {
+    // Highlight the selected room card
+    let allCards = document.querySelectorAll('.room-card');
+    allCards.forEach(card => card.classList.remove('highlighted'));
 
-        
-    </script>
+    let card = element.closest('.room-card');
+    card.classList.add('highlighted');
+
+    // Get the value of the selected radio button (room_id)
+    let selectedRoomId = element.value;
+    console.log("Selected Room ID: " + selectedRoomId);  // Display in the console
+}
+</script>
 
 {% endblock content %}
     

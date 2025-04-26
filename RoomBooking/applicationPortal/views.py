@@ -105,7 +105,24 @@ def pg2(request):
     occupancy_options = [2, 3, 4]
 
     available_rooms.prefetch_related('furnishings')
+    
+    if request.method == 'POST':
+        selected_room_id = request.POST.get("selected_room_id")
+        print("Selected Room ID:", selected_room_id)
+        
+        if not selected_room_id:
+            return HttpResponse("Room ID is missing or invalid.", status=400)
 
+        # Ensure the selected_room_id persists even after other POST requests
+        if selected_room_id:
+            request.session['selected_room_id'] = selected_room_id
+            request.session.modified = True  # Force session to save
+        else:
+            selected_room_id = request.session.get('selected_room_id')
+            
+        print("Session data:", request.session.items())  # Debug session contents
+        return redirect('/application/page3/')
+        
     return render(request, 'applicationPortal/page2.html', {
         'buildings': buildings,
         'rooms': available_rooms,
@@ -115,19 +132,14 @@ def pg2(request):
         'occupancy_options': occupancy_options,
     })
 
-    # return render(request, ', {'title': 'Page2', 'building': building})
-
 def pg3(request):
+    
+    room_id = request.session.get('selected_room_id')
+    if not room_id:
+        return HttpResponse("No room selected", status=400)
+
     if request.method == 'POST':
         student = request.user.student_profile
-
-        selected_room_id = request.POST.get("selected_room_id")
-
-        # Ensure the selected_room_id persists even after other POST requests
-        if selected_room_id:
-            request.session['selected_room_id'] = selected_room_id
-        else:
-            selected_room_id = request.session.get('selected_room_id')
 
         # check if the student has preferences
         if not student.preferences:
@@ -142,10 +154,15 @@ def pg3(request):
         prefs.tidy = request.POST.get('cleanliness') == 'tidy'
         prefs.sleeping = request.POST.get('bedtime') == 'early'
         prefs.save()
+        
+        try:
+            room = Room.objects.get(room_id=room_id)
+        except Room.DoesNotExist:
+            return HttpResponse(f"Room with ID {room_id} does not exist", status=404)
 
         Application.objects.create(
             student=student,
-            room=Room.objects.get(room_id=selected_room_id),    
+            room=room,    
             start_date=datetime.now(),
             end_date= None,
             status='Pending'
