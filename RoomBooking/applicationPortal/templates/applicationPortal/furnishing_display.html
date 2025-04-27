@@ -1,0 +1,31 @@
+{% extends 'applicationPortal/base.html' %}
+{% block content %}
+
+<h2>Available Furnishings</h2>
+
+<div class="row">
+    {% for item in furnishings %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">
+                        <strong>Type:</strong> {{ item.type }}<br>
+                        <strong>Description:</strong> {{ item.description|default:"No description provided." }}
+                    </p>
+                    <!-- Submit button linking to furnishing_request -->
+                    <form action="{% url 'furnishing_request_success' %}" method="post">
+                        <input type="hidden" name="furnishing_id" value="{{ item.furniture_id }}">
+                        <input type="hidden" name="room_id" value="{{ room_id }}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Request This Item</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>No furnishings are currently available.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

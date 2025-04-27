@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from applicationPortal.forms import *
 from RoomBookingWebsite.models import *
 from django.contrib.auth import login
@@ -222,4 +222,39 @@ def approve_application(request, application_id):
 
     except Application.DoesNotExist:
         # Handle case where the application is not found
-        return HttpResponseRedirect(reverse('admin:index'))  # Redirect to the admin index or another page
+        return HttpResponseRedirect(reverse('admin:index'))  # Redirect to the admin index 
+    
+
+def furnishing_request_success(request):
+    if request.method == 'POST':
+        student = request.user.student_profile
+
+        furnishing_id = request.POST.get('furnishing_id')
+        furnishing = Furnishing.objects.get(furniture_id=furnishing_id)  
+
+        target_room_id = request.POST.get('room_id')
+        room = Room.objects.get(room_id=target_room_id)  # <-- same here
+
+        FurnishingRequest.objects.create(
+            student=student,
+            furnishing=furnishing,
+            room=room,
+        )
+
+        return render(request, 'applicationPortal/furnishing_success.html')
+
+    return render(request, 'applicationPortal/furnishing_success.html')
+
+def furnishing_request_display(request):
+    furnishings = Furnishing.objects.filter(is_available=True)
+
+    student = request.user.student_profile
+
+    roomAssign = RoomAssignment.objects.filter(student=student).first()
+
+    target_room_id = roomAssign.room.room_id
+
+    return render(request, 'applicationPortal/furnishing_display.html', {
+        'furnishings': furnishings,
+        'room_id':target_room_id
+    })

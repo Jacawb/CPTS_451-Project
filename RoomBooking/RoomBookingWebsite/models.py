@@ -179,8 +179,17 @@ class FurnishingRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     furnishing = models.ForeignKey(Furnishing, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    issue_description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    
+    status = models.CharField(
+        max_length=50,
+        choices=[
+            ('Pending', 'Pending'),
+            ('Approved', 'Approved'),
+            ('Rejected', 'Rejected')
+        ],
+        default = 'Pending'
+    )
 
     def __str__(self):
         return f"Furnishing Request by {self.student.user.username} for {self.furnishing.type} in {self.room.room_number}"
