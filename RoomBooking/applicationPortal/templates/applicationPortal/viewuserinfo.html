@@ -34,11 +34,11 @@
         </div>
         {% endfor %}
         <form action="{% url 'maintenance_request' %}" method="get">
-            <button type="submit" class="btn btn-primary">Submit Maintenance Request</button>
+            <button type="submit" class="btnb">Submit Maintenance Request</button>
         </form>
         
         <form action="{% url 'furnishing_request_display' %}" method="get" class="mt-2">
-            <button type="submit" class="btn btn-secondary">Submit Furnishing Request</button>
+            <button type="submit" class="btnb">Submit Furnishing Request</button>
         </form>
     {% else %}
         <p>No current room assignment.</p>
@@ -71,6 +71,7 @@
         </table>
     {% else %}
         <p>No applications submitted yet.</p>
+        <a href={% url 'application-start' %} class="btnb"> Start Application </a>
     {% endif %}
 </div>
 {% endblock %}
