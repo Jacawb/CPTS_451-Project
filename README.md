@@ -1,7 +1,8 @@
 # CPTS 451 Project: Room Booking System
 1. Install depedencies
   - pip install -r requirements.txt
-  - Microsoft ODBC 18 Driver 
+  - Microsoft ODBC 18 Driver
+  - SQL database is IP-locked (requires manual permission through us on Azure)
 2. Create test data
   - python manage.py test_data_from_csv
 3. Run web server
