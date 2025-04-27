@@ -90,7 +90,7 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'mssql',
-        'NAME': 'cpts451roombooking',
+        'NAME': 'roomBook2',
         'USER': 'admin1',
         'PASSWORD': '*FYGFykWCAyTY7yi',
         'HOST': 'roombookserver.database.windows.net',
