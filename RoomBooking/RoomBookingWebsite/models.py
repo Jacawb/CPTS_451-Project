@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 class Preferences(models.Model):
     smoking = models.BooleanField(default=False)
     drinking = models.BooleanField(default=False)
     tidy = models.BooleanField(default=False)
     sleeping = models.BooleanField(default=False)
+
     def match_score(self, other):
         score = 0
         if not other:
@@ -15,6 +17,12 @@ class Preferences(models.Model):
         score += self.tidy == other.tidy
         score += self.sleeping == other.sleeping
         return score
+    
+    def __str__(self):
+        # Ensure there is an associated student before accessing
+        if self.student_preferences:
+            return f"Student {self.student_preferences.user.username} - ID: {self.student_preferences.student_id}"
+        return "No Student Assigned"
 
     
 class Student(models.Model):
@@ -127,11 +135,45 @@ class MaintenanceRequest(models.Model):
         ],
         default='Other'
     )
+    status = models.CharField(
+        max_length=50,
+        choices=[
+            ('In Progress', 'In Progress'),
+            ('Complete', 'Complete'),
+            ('Unassigned', 'Unassigned')
+        ],
+        default = 'Unassigned'
+    )
+
     description = models.TextField(default='none')
     submitted_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        is_new_request = self.pk is None  # Check if the request is being created (not updated)
+        previous_status = None
+
+        if not is_new_request:
+            previous_status = MaintenanceRequest.objects.get(pk=self.pk).status  # Fetch previous status
+
+        super(MaintenanceRequest, self).save(*args, **kwargs)
+
+        # Check if status changed to "In Progress" and create a MaintenanceTicket if true
+        if self.status == "In Progress" and previous_status != "In Progress":
+            # Use the helper function to assign a worker
+            worker = find_least_busy_worker()
+            if worker:
+                # Create a MaintenanceTicket
+                MaintenanceTicket.objects.create(job=self, worker=worker)
+
     def __str__(self):
         return f"Request: {self.name} - {self.issue_type} in Room {self.room_number}"
+    
+class MaintenanceTicket(models.Model):
+    job = models.ForeignKey(MaintenanceRequest, on_delete=models.CASCADE)
+    worker = models.ForeignKey(MaintenanceWorker, on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return f"Assigned to: {self.worker} for {self.job}"
     
 class FurnishingRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -142,6 +184,13 @@ class FurnishingRequest(models.Model):
 
     def __str__(self):
         return f"Furnishing Request by {self.student.user.username} for {self.furnishing.type} in {self.room.room_number}"
+    
+    def save(self, *args, **kwargs):
+        # Only mark the furnishing as unavailable if the request is approved
+        if self.status == 'Approved' and self.furnishing.is_available:
+            self.furnishing.is_available = False
+            self.furnishing.save()  # Save the furnishing object with updated availability
+        super(FurnishingRequest, self).save(*args, **kwargs)
 
 
 class Application(models.Model):
@@ -157,3 +206,36 @@ class Application(models.Model):
 
     def __str__(self):
         return f"Application {self.student.user.username} for {self.room.room_number} - {self.status}"
+    
+    def save(self, *args, **kwargs):
+        # Check if the status is being set to 'Approved' and the assignment doesn't already exist
+        if self.pk is not None:  # If it's an existing instance (not a new application)
+            old_status = Application.objects.get(pk=self.pk).status
+            if old_status != 'Approved' and self.status == 'Approved':
+                # Create RoomAssignment when status changes to Approved
+                RoomAssignment.objects.create(
+                    student=self.student,
+                    room=self.room,
+                    start_date=datetime.now(),
+                    end_date=None 
+                )
+        super(Application, self).save(*args, **kwargs)
+
+def find_least_busy_worker():
+    # Fetch all maintenance workers
+    workers = MaintenanceWorker.objects.all()
+
+    # Find the worker with the least number of maintenance tickets
+    least_busy_worker = None
+    least_tickets = float('inf')  # Start with an arbitrarily large number
+
+    for worker in workers:
+        # Count the number of tickets assigned to this worker
+        ticket_count = MaintenanceTicket.objects.filter(worker=worker).count()
+
+        # Check if this worker has fewer tickets than the current least busy worker
+        if ticket_count < least_tickets:
+            least_tickets = ticket_count
+            least_busy_worker = worker
+
+    return least_busy_worker
