@@ -6,10 +6,9 @@
     <label for="name" class="form-label">Name: </label>
     <input id="name" type="text" name="name" value="{{ current_name }}">
     <br>
-    <label for="phone">Phone: </label>
-    {% comment %} <input id="phone" type="text" name="phone" value="{{ current_phone }}"> {% endcomment %}
-    <textarea name="phone_numbers" id="phone_numbers" rows="5" placeholder="Enter one phone number per line">{{ form.phone_numbers }}</textarea>
-
+    <label for="phone_numbers" class="form-label">Phone Number:</label>
+    <input id="phone_numbers" type="number" name="phone_numbers" class="form-label" maxlength="10" title="Phone number must be 10 digits" >
+   
     <button type="submit">OK</button>
 </form>
 

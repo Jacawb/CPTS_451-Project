@@ -14,4 +14,6 @@ urlpatterns=[
     path('maintenance/success/', views.maintenance_success_view, name='maintenance_success'),
     path('furnishing/success', views.furnishing_request_success, name ='furnishing_request_success'),
     path('furnishing', views.furnishing_request_display, name = 'furnishing_request_display')
+    
 ]
+ 

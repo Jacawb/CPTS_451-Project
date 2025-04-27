@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+@login_required (login_url='/login/')
 def start(request):
     return render(request, 'applicationPortal/start.html')
 

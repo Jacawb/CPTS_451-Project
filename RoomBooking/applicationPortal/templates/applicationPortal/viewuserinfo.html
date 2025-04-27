@@ -71,6 +71,7 @@
         </table>
     {% else %}
         <p>No applications submitted yet.</p>
+        <a href={% url 'application-start' %} class="btn btn-success mt-2"> Start Application </a>
     {% endif %}
 </div>
 {% endblock %}
