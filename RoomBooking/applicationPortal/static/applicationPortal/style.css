@@ -78,6 +78,10 @@ a.btnb {
     margin-top: 10px;
 }
 
+.card:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease-in-out;
+}
 
 #buildingSelect {
     padding: 7px;
