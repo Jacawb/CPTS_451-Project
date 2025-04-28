@@ -13,22 +13,16 @@ def start(request):
     return render(request, 'applicationPortal/start.html')
 
 def pg1(request):
-    ##################################################################################################
-    # Testing
-    # Prereq: manage.py populate_test_data
-    try:
-        student = Student.objects.select_related('user').get(user__email='john.doe@example.com')
-    except Student.DoesNotExist:
-        return render(request, 'applicationPortal/page1.html', {
-            'error': 'Test student not found. Please run "manage.py populate_test_data".'
-        })
-    
-    user=student.user
+    user=request.user
 
     # Authenticate user
-    if not request.user.is_authenticated:
-        login(request, user)
-    ##################################################################################################
+    if user.is_authenticated:
+        try:
+            student = user.student_profile  # Assuming OneToOneField or ForeignKey relationship
+        except Student.DoesNotExist:
+            return HttpResponse("No associated student found.")
+    else:
+        return HttpResponse("User is not authenticated.")
 
     
 
