@@ -85,8 +85,8 @@ class Room(models.Model):
 
     room_id = models.AutoField(primary_key=True)
     room_number = models.CharField(max_length=10, unique=True)
-    floor_number = models.IntegerField()
-    building_name=models.CharField(max_length=100, default='error')
+    floor_number = models.IntegerField(db_index=True)
+    building_name=models.CharField(max_length=100, default='error', db_index=True)
     building_id = models.ForeignKey(Building, on_delete=models.CASCADE, related_name="rooms")
     size_sqft = models.IntegerField()
     total_occupancy = models.IntegerField()
