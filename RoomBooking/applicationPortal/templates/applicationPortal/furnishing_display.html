@@ -1,30 +1,36 @@
 {% extends 'applicationPortal/base.html' %}
 {% block content %}
 
-<h2>Available Furnishings</h2>
+<!-- Heading -->
+<h2 class="text-center mb-5 ">Available Furnishings</h2>
 
 <div class="row">
     {% for item in furnishings %}
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.name }}</h5>
-                    <p class="card-text">
+        <div class="col-md-4 col-sm-6 col-12 mb-4">
+            <!-- Lighter Card Design with Softer Shadow -->
+            <div class="card h-100 shadow-sm border-1 rounded-xl">
+                <img src="{{ item.image_url|default:'default_image.jpg' }}" class="card-img-top rounded-top" alt="{{ item.name }}">
+                <div class="card-body p-4">
+                    <h5 class="card-title font-weight-bold text-dark">{{ item.name }}</h5>
+                    <p class="card-text text-muted">
                         <strong>Type:</strong> {{ item.type }}<br>
-                        <strong>Description:</strong> {{ item.description|default:"No description provided." }}
+                        <strong>Description:</strong> {{ item.description|default:"No description available." }}
                     </p>
-                    <!-- Submit button linking to furnishing_request -->
+
+                    <!-- Submit Button with Modern Look -->
                     <form action="{% url 'furnishing_request_success' %}" method="post">
                         <input type="hidden" name="furnishing_id" value="{{ item.furniture_id }}">
                         <input type="hidden" name="room_id" value="{{ room_id }}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Request This Item</button>
+                        <button type="submit" class="btnb">Request This Item</button>
                     </form>
                 </div>
             </div>
         </div>
     {% empty %}
-        <p>No furnishings are currently available.</p>
+        <div class="col-12 text-center">
+            <p class="lead text-muted">No furnishings are currently available.</p>
+        </div>
     {% endfor %}
 </div>
 

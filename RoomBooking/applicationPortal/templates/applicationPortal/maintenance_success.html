@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Request Submitted</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styleMR.css' %}">
+    <link rel="stylesheet" href="{% static 'applicationPortal/styleMR.css' %}">
 </head>
 <body>
     <div class="form-container">
         <h2>Request Submitted</h2>
         <p>Your maintenance request has been received. We will address the issue soon.</p>
         <a href="{% url 'maintenance_request' %}">Submit another request</a>
+        <a href="{% url 'view_info' %}">Home</a>
     </div>
 </body>
 </html>
