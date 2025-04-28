@@ -2,3 +2,4 @@ django
 pyodbc
 django-mssql-backend
 mssql-django
+pymysql
